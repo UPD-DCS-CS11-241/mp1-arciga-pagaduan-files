@@ -14,6 +14,6 @@ Before playing the game, here are the prerequisites that you should follow to en
  1. **Install WSL on your device**. Click on the Windows Icon 🪟 and search for `Command Prompt` in Windows Powershell. Type `wsl --install`in your Command Prompt. After installing, you may be asked for your username and password. 
  2. In your WSL, **type `pip install pygame`to install PyGame**. This is the third-party library that is utilized for the game program.
  3. Also, **type `pip install pytest`to install PyTest**. This is also a third-party library used for testing the functionality of the game program.
- 4. Since you are here in Github, ![How To Download Files](/readme_docs/)
+ 4. Since you are here in Github, ![How To Download Files](/readme_docs/screenshot_1.png)
 
 Not yet finished
