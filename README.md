@@ -34,10 +34,10 @@ Here are the contents of the user manual / documentation:
     - [Tutorials: Level 5](#tutorials-level-5)
  5. [For Instructors and Developers](#for-instructors-and-developers)
     - [Code Documentation](#code-documentation)
-      - [mp1.py](#mp1py)
-      - [test.py](#testpy)
-      - [gui.py](#guipy)
-      - [game.py](#gamepy)
+      - [mp1.py](#the-mp1py-file)
+      - [test.py](#the-testpy-file)
+      - [gui.py](#the-guipy-file)
+      - [game.py](#the-gamepy-file)
     - [Bonus Features](#bonus-features)
     - [For Future Developers](#for-future-developers)
     - [Release and Patch Notes](#release-and-patch-notes)
@@ -312,12 +312,111 @@ This level is somehow a trivial level (depending on your perception) as it intro
 This section is for the instructors who will grade our project, as well as for (future) developers who are interested on improving our project. Also, there are patch notes or announcements in this section for the gamers or users of this game to be informed of the possible updates of the game.
 
 ## Code Documentation
-This section contains the code documentation and explanation of the `.py` files that are important for this project.
+This section contains the code documentation and explanation of the `.py` files that are important for this project. The main library used for this project are the `pygame` library for the graphical user interface (GUI) and `pytest` library for the testing of the files.
 > This part is not yet finished.
-### `mp1.py`
-### `test.py`
-### `gui.py`
-### `game.py`
+
+### The `mp1.py` file
+Content
+
+
+### The `test.py` file
+Content
+
+
+### The `gui.py` file
+The `gui.py` file contains the different functions that enable our team to create the main menu interface. To give an overview on how the whole file works, we used the `pygame` library to create features such as button and loading images onto the screen. The idea on how the file works is that the `gui.py` contains functions that represent the 'buttons' and their functionalities ('Play', 'Settings', 'Exit Game' and other buttons in the game). It is like a 'slideshow' presentation wherein when you click a button (like for example, 'Play'), you will be 'directed' to another frame or in Python sense, a new frame will be shown through the `screen.blit()` function which is seen across the document. Every function contains clickable buttons and event handling methods which will be explained further below.
+
+```python
+import pygame, sys
+import game
+import time
+```
+In this part of the code, libraries and modules were imported to make the main menu interface work. The `pygame` library was imported as it is one of the libraries in Python used to make games and its features. The `sys` module was imported to let the program interact with the system such as when the player wants to exit the game (removing the game screen on the system). The `game` module was imported as this represents `game.py` - the file used to load the game interface, as well as implementation of game mechanics such as adding the number of points, checking the remaining number of moves, and others. In the `gui.py` file, the `game` module is mostly used to call the function `start_with_gui_level()` in `game.py`, which opens the files such as `level1.in`  which are used to set-up the game itself. The `time` module was used to make the program wait or delay for seconds. This is primarily used in the `loading()` function in `gui.py` wherein the program shows a loading screen in the monitor.
+
+```python
+#For setting up the game
+mainClock = pygame.time.Clock()
+from pygame.locals import *
+pygame.init()
+pygame.display.set_caption('Egg Roll')
+
+#For setting the game icon of the game
+icon = pygame.image.load('images/icon.png')
+pygame.display.set_icon(icon)
+
+#For setting the screen resolution of the game
+screen = pygame.display.set_mode((960, 768),0,32)
+```
+This block of code is for the setting up of the game itself. The `pygame.time.Clock()` creates a clock object to be used in functions where time delays are needed. The `from pygame.locals import *` is for importing constants from `pygame` library such as `KEYDOWN` and `QUIT` for managing inputs like arrow keys and letter keys.  The `pygame.display.set_caption('Egg Roll')` sets the name of the game window to 'Egg Roll'. The icon for the game is located on the `images` folder, and the `pygame.display.set_icon()` function displays the `icon.png` on the taskbar whenever the game is opened. The `pygame.display.set_mode()` function makes the resolution of the game to be set to 960 x 768. All the frames used for the game were set to this resolution.
+
+```python
+# Images or frames used for the game
+main_menu_light = pygame.image.load('images/main_menu_light.png')
+levels_light = pygame.image.load('images/levels_light.png')
+loading_1_light = pygame.image.load('images/loading_1_light.png')
+...
+sure_dark = pygame.image.load('images/sure_dark.png')
+```
+
+The block of code above is for assigning the object or picture being loaded into variables. As seen in the code, `pygame.image.load()` is primarily used to load the images and frames for the interfaces of the game. These frames are stored in the `images` folder. When you just put the filename as the argument, the game will not load and the terminal will tell you that the images are not in the current directory or folder. The variables are also named according to whether the frames are for light or dark mode.
+```python
+# Transparent Buttons for the Game
+transparent_play_button = pygame.Surface((285,90), pygame.SRCALPHA)
+#transparent_play_button.fill((255,0,0,128))
+...
+transparent_no_button = pygame.Surface((260,80), pygame.SRCALPHA)
+#transparent_no_button.fill((255,0,0,128))
+```
+This block of code is for assigning the rectangle button objects to variables. The `pygame.Surface()` creates a rectangle shape on the interfaces of the game with the width and height as its arguments (for the size of the rectangle).  The `pygame.SRCALPHA` is called for the rectangles to be transparent. Without it, the rectangles will be shown alongside with the game frames. These rectangles will be used as buttons so that when the players click on a specific button like 'Settings', they are directed to the Settings Menu. You can also see the `transparent_no_button.fill()` function being commented out as it was a way for us to check if the buttons were properly placed - we cannot just make it transparent as it will be hard for us to determine if they are placed correctly and if they are working properly.
+
+Before explaining each function in the file, there are certain code blocks that are seen across the functions that are responsible for **creating clickable buttons** and **event handling**.
+
+```python
+# An excerpt from the main_menu() function
+# For creating clickable buttons
+position_x, position_y = pygame.mouse.get_pos()
+...
+exit_game_button = pygame.Rect(590, 570, 310, 90)
+...   
+if exit_game_button.collidepoint((position_x, position_y)):
+    if click:
+        settings(mode)
+...
+screen.blit(transparent_exit_game_button, (590, 570))
+```
+This particular code block is seen across functions in different variations. This code block is responsible for creating clickable buttons, as well as making sure that an action is done when these buttons are clicked. The one with the `pygame.mouse.get_pos()` is responsible for finding the position of the mouse pointer on the game screen, and this position are saved as `position_x` and `position_y`. 
+
+> To be continued
+
+```python
+def main_menu(mode = 'light'):
+    click = False
+    while True:
+        if mode == "light":
+            screen.blit(main_menu_light, (0, 0))
+        else:
+            screen.blit(main_menu_dark, (0, 0))
+            
+        position_x, position_y = pygame.mouse.get_pos()   
+		...
+        exit_game_button = pygame.Rect(590, 570, 310, 90)
+...
+screen.blit(transparent_exit_game_button, (590, 570))	
+```
+The `enter code here`
+
+
+### The `game.py` file
+Content
+
+### The `assets` folder
+The `assets` folder contains the icons for the empty nests, full nests, eggs, grass, walls, and frying pans to be used in the game interface. All of these icons were made using Canva elements.
+ 
+### The `images` folder
+The `images` folder contains the frames that we used in both the main menu and game interface. These frames were used in several features in the game such as the main menu itself, the level selector as you click the 'Play' button, the night mode frames, and many more. These frames were also made using Canva elements and the theme/palette for the design of the game is *Spring Color Palette* which incorporates colors such as green, yellow, brown, and orange that symbolize growth and enjoyment as the players immerse in the game.
+
+### The `readme_docs` folder
+The `readme_docs` folder contains other images used in the `README.md` file.
 
 ## Bonus Features
 This section contains the bonus features that were implemented in the game. The game is supposed to be a simple terminal version, but the developers added features to improve the gaming experience. The following below contains these bonus features:
@@ -328,6 +427,8 @@ This section contains the bonus features that were implemented in the game. The 
 - Adding levels selector
 - Adding tutorial levels
 - Adding tutorial levels selector
+- Adding an icon for the game to be seen in the taskbar as you open the game (seen in the picture below)
+![Icon on taskbar](/readme_docs/proof_of_icon.png)
 - Integrating inputs such as arrow keys, lowercase letters, and uppercase letters (for L, R, F, and B) for easier gaming experience for players who are used to arrow keys
 - Adding a settings menu
 - Adding a night mode feature on both main menu and game interface
@@ -364,6 +465,8 @@ This section contains the possible features or improvements that (future) develo
 - Adding leaderboard so that the players can track their progress
 - Adding a feature where players can know if they did the actual solution / if they achieved the intended highest possible score
 - Adding an online leaderboard where players can battle each other on their scores (with rules like players will lose points the more that they have more tries solving the game)
+
+Also, for developers, you may also run the game on terminal mode using WSL terminal by typing `python3 mp1.py <level filename>` and choose the appropriate filename in the folder. Moreover, to test the program, you may type `pytest test.py` since the file `mp1.py` file contains the test cases for the `mp1.py` file.
 
 ## Release and Patch Notes
 This section contains the release and patch notes made by the developers of this game to fix minor bugs and improve the gaming experience of the users.
