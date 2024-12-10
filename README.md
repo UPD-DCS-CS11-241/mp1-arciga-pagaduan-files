@@ -14,9 +14,29 @@ Here are the contents of the user manual / documentation:
  3. [Navigating the Game Interface](#navigating-the-game-interface)
     - [Play](#play)
     - [Settings](#settings)
+      - [Tutorials](#tutorials)
+      - [Control Keys](#control-keys)
+      - [Night Mode](#night-mode)
+      - [Credits](#credits)
+      - [Main Menu](#main-menu)
     - [Exit Game](#exit-game)
- 5. [Game Levels](#game-levels)
- 6. [For Instructors and Developers](#for-instructors-and-developers)
+ 4. [Game Levels](#game-levels)
+    - [Level 1: U-Turn](#level-1-u-turn)
+    - [Level 2: Shake It Off](#level-2-shake-it-off)
+    - [Level 3: Mitosis](#level-3-mitosis)
+    - [Level 4: Clockwise](#level-4-clockwise)
+    - [Level 5: Into The Void](#level-5-into-the-void)
+    - [Tutorials: Level 1](#tutorials-level-1)
+    - [Tutorials: Level 2](#tutorials-level-2)
+    - [Tutorials: Level 3](#tutorials-level-3)
+    - [Tutorials: Level 4](#tutorials-level-4)
+    - [Tutorials: Level 5](#tutorials-level-5)
+ 5. [For Instructors and Developers](#for-instructors-and-developers)
+    - Code Documentation
+    - Bonus Features
+    - For Future Developers
+    - Patch Notes
+    - Task Delegations
 
 
 # Getting Started
