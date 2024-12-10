@@ -1,6 +1,5 @@
 # Welcome to Egg Roll!
-
-> Note that this documentation is still not yet finished. We are sorry for the delay.
+> Note that the code documentation part is still not yet done. Apologies for the delay.
 
 Good day! Are you egg-cited to play the greatest game of all time? If you are seeing this, this is your sign to roll with us in ***Egg Roll***.
 
@@ -37,8 +36,8 @@ Here are the contents of the user manual / documentation:
     - Code Documentation
     - Bonus Features
     - For Future Developers
-    - Patch Notes
-    - Task Delegations
+    - [Release and Patch Notes](#release-and-patch-notes)
+    - [Acknowledgements and Task Delegations](#acknowledgements-and-task-delegations)
 
 
 # Getting Started
@@ -51,7 +50,7 @@ Before playing the game, here are the prerequisites or steps that you should fol
 
  3. In your WSL terminal, type **`sudo apt update`** followed by **`sudo apt install python3.12`** to install Python in your WSL system. To verify if you already installed Python, type **`python3 --version`** in your terminal. It should show you something like **`Python 3.12.7`** in your screen - this means you have Python in version 3.12.7.
 
- 4. Also, type **`pip install pygame`** to install PyGame. This is the third-party library that is utilized for the game program.
+ 4. Also, if you are interested in testing the program, type **`pip install pygame`** to install PyGame. This is the third-party library that is utilized for the game program.
 
  5. Lastly, type **`pip install pytest`** to install PyTest. This is also a third-party library used for testing the functionality of the game program.
 
@@ -282,7 +281,7 @@ This level is an easy to moderately easy level that incorporates the concept of 
 
 > **Number of rows**: 5
 
-> **Number of moves available**: 4 
+> **Number of moves available**: 5 
 
 > **Solution**: RFLB
 
@@ -301,17 +300,89 @@ This level is somehow a trivial level (depending on your perception) as it intro
 
 > **Highest possible points**: 44
 
+
+
+
+
 # For Instructors and Developers
-1. Content
- 
- Code Documentation
- a. mp1.py
- b. gui.py
- c. game.py
- d. Bonus Features
- Patch Notes
- 
- # Opening the Game
-1. Since you 
- 10.aa
-  
+This section is for the instructors who will grade our project, as well as for (future) developers who are interested on improving our project. Also, there are patch notes or announcements in this section for the gamers or users of this game to be informed of the possible updates of the game.
+
+## Code Documentation
+This section contains the code documentation and explanation of the `.py` files that are important for this project.
+> This part is not yet finished.
+### `mp1.py`
+### `test.py`
+### `gui.py`
+### `game.py`
+
+## Bonus Features
+This section contains the bonus features that were implemented in the game. The game is supposed to be a simple terminal version, but the developers added features to improve the gaming experience. The following below contains these bonus features:
+- Adding a main menu
+- A fancier main menu interface using Canva and `pygame` library
+- A fancier game interface using Canva and `pygame` library
+- Adding multiple levels
+- Adding levels selector
+- Adding tutorial levels
+- Adding tutorial levels selector
+- Integrating inputs such as arrow keys, lowercase letters, and uppercase letters (for L, R, F, and B) for easier gaming experience for players who are used to arrow keys
+- Adding a settings menu
+- Adding a night mode feature on both main menu and game interface
+- Inclusion of control keys in the settings menu 
+- Inclusion of credits in the settings menu
+- Adding the main menu button on the level selectors 
+- Adding the main menu button on the settings menu
+- Adding the settings button on the tutorial level selectors
+- Adding a loading screen in both levels and tutorial levels before loading the actual game interface
+- Adding an exit game button on the main menu interface
+- Adding a confirmation message as the player clicks the exit game button on the main menu interface
+- Ability to see the previous moves made by the player in the game interface
+- Ability to see the number of remaining moves that the player still has
+- Ability to see the score that the player gains
+- Adding the control keys in the game interface for players to be guided on what keys to click
+- Adding the objective of the game under the control keys in the game interface for players to be informed of what they should be aiming in the game
+- Adding the prompt to let the players know that they can use the `DELETE` key on their keyboard to restart their game
+- Ability to restart the game via the `DELETE` key in the keyboard
+- Showing on the screen that the players win or lose the level depending if they put all the eggs on the basket or not
+## For Future Developers
+This section contains the possible features or improvements that (future) developers may want to implement in the game. The list below contains the fixes or improvements that can be (or may be) added to the game in the future:
+- Adding background music to the main menu and game interface
+- Adding sound effects on clicking the buttons
+- Adding sound effects when eggs are put in the frying pan
+- Adding sound effects when eggs move
+- Adding challenging levels to the game
+- Adding buttons to restart the game in the game interface
+- Adding buttons that direct to the levels or main menu in the game interface
+- Adding a storyline to enhance the gaming experience
+- Ability to undo moves
+- Adding a power-up (like when an egg goes to a tile, that egg will have a 2x multiplier as it goes to a nest)
+- Adding options that provide hints to the player 
+- Adding in-game currency that the players can use to buy boosts such as 2x multiplier, adding hints, buying mode displays other than night mode, etc.
+- Adding leaderboard so that the players can track their progress
+- Adding a feature where players can know if they did the actual solution / if they achieved the intended highest possible score
+- Adding an online leaderboard where players can battle each other on their scores (with rules like players will lose points the more that they have more tries solving the game)
+
+## Release and Patch Notes
+This section contains the release and patch notes made by the developers of this game to fix minor bugs and improve the gaming experience of the users.
+- **Version: 1.0.1**
+  - (12/10/2024) Minor fixes have been made on the logic of the code in `gui.py`, as well as the resolution of the game. The game designs in `level4.in`, `level5.in`, and `tutorial4.in` were slightly fixed to ensure that the players will be able to put the eggs on all nests. 
+## Acknowledgements and Task Delegations
+This section shows the task delegations and acknowledgements of the team who created this project.
+
+ - **John Harry Arciga**
+   - Making of the `gui.py` file
+   - Making of the `game.py` file
+   - Editing of the `mp1.py` file
+   - Making and editing of the `test.py` file
+   - Making of the graphics for the game itself
+   - Adding the [bonus features](#bonus-features)
+   - Making the `README.md` documentation file
+   - Compiling the images in the `assets`, `images`, and `readme_docs` folder
+   - Doing the [release and patch notes](#release-and-patch-notes)
+   
+ - **David Pagaduan**
+   - Making of the test cases to be put in the `test.py` file
+   - Making the `mp1.py` file
+
+
+
+We would like to thank our CS 11 instructors for teaching us the fundamentals of programming. We would also like to thank everyone who plays (and will play) this game in making this project serve its purpose: to provide enjoyment and fulfillment to the hearts of the gamers. Together, let us keep it rolling!
