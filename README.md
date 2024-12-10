@@ -130,7 +130,7 @@ Clicking the `Main Menu` button will be direct you back to the [Main Menu](#navi
 Clicking the `Exit Game` on the [Main Menu](#navigating-the-game-interface) section will lead you to the screen like the one shown above. This screen shows you if you are already leaving the game.  Clicking `Yes` will close the game, while clicking `No` will lead you back to the [Main Menu](#navigating-the-game-interface) interface.
 
 # Game Levels
-![Game Interface](/readme_docs/level3.png)
+![Game Interface](/readme_docs/level3_interface.png)
 
 In the game level interface as shown above (and every game level), you can see the previous moves (which shows you the moves you have made), remaining moves (number of moves available), points (the score you accumulate throughout the game sessions), the control keys you may use to progress the game, and the prompt telling you that you can press `DELETE` in your keyboard to restart the game.
 
