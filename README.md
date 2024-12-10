@@ -33,9 +33,13 @@ Here are the contents of the user manual / documentation:
     - [Tutorials: Level 4](#tutorials-level-4)
     - [Tutorials: Level 5](#tutorials-level-5)
  5. [For Instructors and Developers](#for-instructors-and-developers)
-    - Code Documentation
-    - Bonus Features
-    - For Future Developers
+    - [Code Documentation](#code-documentation)
+      - [mp1.py](#mp1.py)
+      - [test.py](#test.py)
+      - [gui.py](#gui.py)
+      - [game.py](#game.py)
+    - [Bonus Features](#bonus-features)
+    - [For Future Developers](#for-future-developers)
     - [Release and Patch Notes](#release-and-patch-notes)
     - [Acknowledgements and Task Delegations](#acknowledgements-and-task-delegations)
 
