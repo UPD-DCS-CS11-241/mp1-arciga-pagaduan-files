@@ -13,8 +13,8 @@ Here are the contents of the user manual / documentation:
  2. [Opening the Game](#opening-the-game)
  3. [Navigating the Game Interface](#navigating-the-game-interface)
     - [Play](#play)
-        b. [Settings](#settings)
-        c. [Exit Game](#exit-game)
+    - [Settings](#settings)
+    - [Exit Game](#exit-game)
  5. [Game Levels](#game-levels)
  6. [For Instructors and Developers](#for-instructors-and-developers)
 
