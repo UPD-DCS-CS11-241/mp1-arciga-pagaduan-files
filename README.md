@@ -12,11 +12,11 @@ Here are the contents of the user manual / documentation:
  1. [Getting Started](#getting-started)
  2. [Opening the Game](#opening-the-game)
  3. [Navigating the Game Interface](#navigating-the-game-interface)
-        a. [Play](#play)
+    - [Play](#play)
         b. [Settings](#settings)
         c. [Exit Game](#exit-game)
- 4. [Game Levels](#game-levels)
- 5. [For Instructors and Developers](#for-instructors-and-developers)
+ 5. [Game Levels](#game-levels)
+ 6. [For Instructors and Developers](#for-instructors-and-developers)
 
 
 # Getting Started
