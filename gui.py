@@ -228,7 +228,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_1_light,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial1.in")
                 else: 
                     game.start_gui_with_level("level1.in")
@@ -236,7 +236,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_1_dark,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial1.in", mode)
                 else: 
                     game.start_gui_with_level("level1.in", mode)
@@ -245,7 +245,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_2_light,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial2.in")
                 else: 
                     game.start_gui_with_level("level2.in")
@@ -253,7 +253,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_2_dark,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial2.in", mode)
                 else: 
                     game.start_gui_with_level("level2.in", mode)
@@ -262,7 +262,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_3_light,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial3.in")
                 else: 
                     game.start_gui_with_level("level3.in")
@@ -271,7 +271,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_3_dark,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial3.in", mode)
                 else: 
                     game.start_gui_with_level("level3.in", mode)
@@ -281,7 +281,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_4_light,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial4.in")
                 else: 
                     game.start_gui_with_level("level4.in")
@@ -290,7 +290,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_4_dark,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial4.in", mode)
                 else: 
                     game.start_gui_with_level("level4.in", mode)
@@ -300,7 +300,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_5_light,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial5.in")
                 else: 
                     game.start_gui_with_level("level5.in")
@@ -309,7 +309,7 @@ def loading(file, mode = "light", tutorials = "no"):
                 screen.blit(loading_5_dark,(0,0))
                 pygame.display.flip()
                 pygame.time.wait(5000)
-                if tutorials:
+                if tutorials != "no":
                     game.start_gui_with_level("tutorial5.in", mode)
                 else: 
                     game.start_gui_with_level("level5.in", mode)
