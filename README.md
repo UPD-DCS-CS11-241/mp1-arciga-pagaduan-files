@@ -57,7 +57,7 @@ Before playing the game, here are the prerequisites or steps that you should fol
 
 
 # Navigating the Game Interface
-![Main Menu Interface](/images/main-menu-light.png)
+![Main Menu Interface](/images/main_menu_light.png)
 
 In this section, we will be navigating the Egg Roll interface.  The picture above shows the `Main Menu` interface of the game. It has three buttons: [`Play`](#play), [`Settings`](#settings), and [`Exit Game`](#exit-game) which will be explained in the next sections.
 
