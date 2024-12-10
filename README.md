@@ -12,8 +12,11 @@ Here are the contents of the user manual / documentation:
  1. [Getting Started](#getting-started)
  2. [Opening the Game](#opening-the-game)
  3. [Navigating the Game Interface](#navigating-the-game-interface)
- 4. [Game Levels](#game-levels)
- 5. [For Instructors and Developers](#for-instructors-and-developers)
+     a. [Play](##play)
+     b. [Settings](##settings)
+     c. [Exit Game](##exit-game)
+ 5. [Game Levels](#game-levels)
+ 6. [For Instructors and Developers](#for-instructors-and-developers)
 
 
 # Getting Started
@@ -67,14 +70,181 @@ There are five levels named: *U-Turn, Shake It Off, Mitosis, Clockwise,* and *In
 
 ![Loading Screen Interface](/images/loading_1_light.png)
 
-![Game Interface](/readme_docs/game_interface.png)
+![Game Interface](/readme_docs/level1_interface.png)
 
+
+It also has the `Main Menu` button that leads you back to the [Main Menu](#navigating-the-main-interface). More details on these levels, as well as the mechanics and solutions, are shown in the [Game Levels](#game-levels) section.
+
+## Settings
+![Settings Interface](/images/settings_light.png)
+
+As you click the `Settings` button, you can see the interface (as shown in the picture above) containing the different options in store for this game. This includes `Tutorials`, `Control Keys`, `Night Mode`, `Credits`, and `Main Menu`.
+
+### Tutorials
+![Tutorials Interface](/images/tutorials_light.png)
+
+As you click the `Tutorials` button, you can see the interface (just like the one shown above) containing the tutorial levels for the game. It also has the `Main Menu` button to go back to the main menu of the game.
+
+There are five levels for the tutorial section. These levels are relatively easy as it can give you a grasp on what the rules are. When you click a level here (example: Level 1), a loading screen will be shown which directs you to the game itself *(as shown in the pictures below).*
+
+![Loading Screen Interface](/images/loading_1_light.png)
+
+![Game Interface](/readme_docs/game_interface.png)
 
 More details on these levels, as well as the mechanics and solutions, are shown in the [Game Levels](#game-levels) section.
 
+
+### Control Keys
+![Control Keys](/images/control_keys_light.png)
+
+Clicking the `Controls` button will show the interface like the one shown above. It contains the different controls for you to move the egg across the game area such as:
+
+ - `L`, `l`, or `←` to move left
+ - `R`, `r`, or `→` to move right
+ - `F`,`f`, or `↑` to move up
+ - `B`, `b`, or `↓` to move down
+
+It also has the `Settings` button, and when clicked, it will bring you back to the [Settings](##settings).
+
+### Night Mode
+![Night Mode Settings](/images/settings_dark.png)
+
+![Night Mode Main Menu](/images/main_menu_dark.png)
+
+Clicking the `Night Mode` button will change the whole game interface into night mode like the one shown above.
+
+
+### Credits
+![Credits](/images/credits_light.png)
+
+Clicking the `Credits` button will direct you to the interface as shown above. It contains the name of the creators of the game (us). 
+
+It also has the `Settings` button, and when clicked, it will bring you back to the [Settings](##settings).
+
+### Main Menu
+Clicking the `Main Menu` button will be direct you back to the [Main Menu](#navigating-the-game-interface) interface.
+
+## Exit Game
+![Exit Game Interface](/images/sure_light.png)
+
+Clicking the `Exit Game` on the [Main Menu](#navigating-the-game-interface) section will lead you to the screen like the one shown above. This screen shows you if you are already leaving the game.  Clicking `Yes` will close the game, while clicking `No` will lead you back to the [Main Menu](#navigating-the-game-interface) interface.
+
 # Game Levels
-1. Content
+![Game Interface](/readme_docs/level3.png)
+
+In the game level interface as shown above (and every game level), you can see the previous moves (which shows you the moves you have made), remaining moves (number of moves available), points (the score you accumulate throughout the game sessions), the control keys you may use to progress the game, and the prompt telling you that you can press `DELETE` in your keyboard to restart the game.
+
+In this game proper, there are total of 10 levels (5 from the Levels in the [Levels](##play) interface and 5 from the [Tutorials](###tutorials). In each level, you are given eggs, and your objective is to put these eggs on all nests. There are frying pans on the game area, and as much as possible, you should avoid getting your eggs into the frying pan. There are also walls where eggs cannot penetrate. Once the eggs reach the nests, the nest will become full and will act as a wall so that the eggs cannot get pass through it.
+
+Getting an egg into the egg nest will give you **10** points. Gettng an egg into a frying pan will give you **-5** points (losing 5 points). Finishing the level with remaining moves will give you **`remaining moves * 2`** points -- meaning, if you finished a game with 30 points from 3 full egg nests and you still have 2 remaining moves (provided that all nests are occupied), you will garner a total of `30 + (2 * 2) = 34` points.  Note that there are levels wherein it is inevitable for eggs to move into the frying pan to solve the particular game level (implying that not all eggs must fit on all nests).
+
+Winning the game means that you have put the eggs on all nests within the given number of moves available. Losing the game means that either you have not put the eggs on all nests at the end of the round, you have put all eggs on the frying pan on or before the end of the round, or you have put some eggs on the frying pan at the end of the round.
+
+To see how the level looks like, photos and solutions are provided to solve the levels below.
+> **Spoiler Alert**: For those who do not want spoilers on the solutions, we advise you not to scroll down further.
+
+ 1. [Level 1: U-Turn](##level-1-u-turn) 
+ 2. Level 2: Shake It Off
+ 3. Level 3: Mitosis
+ 4. Level 4: Clockwise
+ 5. Level 5: Into The Void
+ 6. Tutorials: Level 1
+ 7. Tutorials: Level 2
+ 8. Tutorials: Level 3
+ 9. Tutorials: Level 4
+ 10. Tutorials: Level 5
+
+## Level 1 U Turn
+![Level 1: U-Turn Interface](/readme_docs/level1_interface.png)
+
+This is a trivial level with a trivial solution. It is named *U-Turn*, with its name based on its actual sequence of steps for the correct solution. This level somehow prepares you to more harder levels in the game.
+> **Number of rows**: 4
+> **Number of moves available**: 4
+> **Solution**: FLB
+> **Highest possible points**: 12
+
+## Level 2: Shake It Off
+![Level 2: Shake-It-Off Interface](/readme_docs/level2_interface.png)
+
+This is also a trivial level with a trivial solution - it depends if you figured it out quickly. It is named *Shake It Off*, with its name also based on its actual sequence of steps for the correct solution. One may be tempted to do left or right movement first but doing so will eventually make you have less eggs to put on all nests.
+> **Number of rows**: 4
+> **Number of moves available**: 4
+> **Solution**: FB or BF
+> **Highest possible points**: 64
+
+## Level 3: Mitosis
+![Level 3: Mitosis Interface](/readme_docs/level3_interface.png)
+
+This level is named *Mitosis* as the game design resembles the splitting of two cells or squares - inspired by the biological concept of *mitosis*. It is a moderately hard level.
+> **Number of rows**: 5
+> **Number of moves available**: 5
+> **Solution**: LRBR or RLBL
+> **Highest possible points**: 37
+
+## Level 4: Clockwise
+![Level 4: Clockwise Interface](/readme_docs/level4_interface.png)
+
+This level is named *Clockwise* as the game solution resembles the actual concept of *clockwise* movement. It is a moderately hard to hard level. 
+> **Number of rows**: 9
+> **Number of moves available**: 9 
+> **Solution**: LFRB
+> **Highest possible points**: 200
  
-# For Instructors and Developers
-1. Content
- 
+## Level 5: Into The Void
+![Level 5: Into The Void Interface](/readme_docs/level5_interface.png)
+
+This level is named *Into The Void* as the unique game design for this level has frying pans, instead of walls, as the outer layer in the level. Also, the game design for this level resembles being inside a void, since everything is surrounded by frying pans (whose function resembles like a void). It is a moderately hard to hard level. 
+> **Number of rows**: 19
+> **Number of moves available**: 10 
+> **Solution**: FBRLFLR 
+> **Highest possible points**: 561
+
+## Tutorials: Level 1
+![Tutorials: Level 1 Interface](/readme_docs/tutorials_level1_interface.png)
+
+This level is supposed to be a trivial level wherein you can get a grasp on the mechanics of the game through a simple puzzle.
+
+> **Number of rows**: 3
+> **Number of moves available**: 2 
+> **Solution**: L 
+> **Highest possible points**: 561
+
+## Tutorials: Level 2
+![Tutorials: Level 2 Interface](/readme_docs/tutorials_level2_interface.png)
+
+This level is also a trivial level wherein you can get a grasp on how frying pans work in the game.
+
+> **Number of rows**: 4
+> **Number of moves available**: 3 
+> **Solution**: LR 
+> **Highest possible points**: 22
+
+## Tutorials: Level 3
+![Tutorials: Level 3 Interface](/readme_docs/tutorials_level3_interface.png)
+
+This level is also a trivial level wherein you can get a grasp on how important it is to take note on the number of moves available for the level. One may tempt to do RLBRF or LRFLB but since there are only 3 moves available, these solutions may not work.
+
+> **Number of rows**: 4
+> **Number of moves available**: 3 
+> **Solution**: FB or BF
+> **Highest possible points**: 22
+
+## Tutorials: Level 4
+![Tutorials: Level 4 Interface](/readme_docs/tutorials_level4_interface.png)
+
+This level is an easy to moderately easy level that incorporates the concept of frying pans, importance of number of remaining moves, and every aspect of the game mechanics.
+
+> **Number of rows**: 5
+> **Number of moves available**: 4 
+> **Solution**: RFLB
+> **Highest possible points**: 35
+
+## Tutorials: Level 5
+![Tutorials: Level 5 Interface](/readme_docs/tutorials_level5_interface.png)
+
+This level is somehow a trivial level (depending on your perception) as it introduces the concept in some levels of the game wherein you have to think on how your movements affect the other eggs in several 'subdivisions' of the gaming area.
+
+> **Number of rows**: 8
+> **Number of moves available**: 4 
+> **Solution**: LR or RL
+> **Highest possible points**: 44
