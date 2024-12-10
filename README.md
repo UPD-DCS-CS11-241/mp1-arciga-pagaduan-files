@@ -130,7 +130,7 @@ Clicking the `Main Menu` button will be direct you back to the [Main Menu](#navi
 Clicking the `Exit Game` on the [Main Menu](#navigating-the-game-interface) section will lead you to the screen like the one shown above. This screen shows you if you are already leaving the game.  Clicking `Yes` will close the game, while clicking `No` will lead you back to the [Main Menu](#navigating-the-game-interface) interface.
 
 # Game Levels
-![Game Interface](/readme_docs/level3_interface.png)
+![Game Interface](/readme_docs/level_3_interface.png)
 
 In the game level interface as shown above (and every game level), you can see the previous moves (which shows you the moves you have made), remaining moves (number of moves available), points (the score you accumulate throughout the game sessions), the control keys you may use to progress the game, and the prompt telling you that you can press `DELETE` in your keyboard to restart the game.
 
@@ -167,7 +167,7 @@ This is a trivial level with a trivial solution. It is named *U-Turn*, with its 
 > **Highest possible points**: 12
 
 ## Level 2: Shake It Off
-![Level 2: Shake-It-Off Interface](/readme_docs/level2_interface.png)
+![Level 2: Shake-It-Off Interface](/readme_docs/level_2_interface.png)
 
 This is also a trivial level with a trivial solution - it depends if you figured it out quickly. It is named *Shake It Off*, with its name also based on its actual sequence of steps for the correct solution. One may be tempted to do left or right movement first but doing so will eventually make you have less eggs to put on all nests.
 > **Number of rows**: 4
@@ -179,7 +179,7 @@ This is also a trivial level with a trivial solution - it depends if you figured
 > **Highest possible points**: 64
 
 ## Level 3: Mitosis
-![Level 3: Mitosis Interface](/readme_docs/level3_interface.png)
+![Level 3: Mitosis Interface](/readme_docs/level_3_interface.png)
 
 This level is named *Mitosis* as the game design resembles the splitting of two cells or squares - inspired by the biological concept of *mitosis*. It is a moderately hard level.
 > **Number of rows**: 5
@@ -191,7 +191,7 @@ This level is named *Mitosis* as the game design resembles the splitting of two 
 > **Highest possible points**: 37
 
 ## Level 4: Clockwise
-![Level 4: Clockwise Interface](/readme_docs/level4_interface.png)
+![Level 4: Clockwise Interface](/readme_docs/level_4_interface.png)
 
 This level is named *Clockwise* as the game solution resembles the actual concept of *clockwise* movement. It is a moderately hard to hard level. 
 > **Number of rows**: 9
@@ -203,7 +203,7 @@ This level is named *Clockwise* as the game solution resembles the actual concep
 > **Highest possible points**: 200
  
 ## Level 5: Into The Void
-![Level 5: Into The Void Interface](/readme_docs/level5_interface.png)
+![Level 5: Into The Void Interface](/readme_docs/level_5_interface.png)
 
 This level is named *Into The Void* as the unique game design for this level has frying pans, instead of walls, as the outer layer in the level. Also, the game design for this level resembles being inside a void, since everything is surrounded by frying pans (whose function resembles like a void). It is a moderately hard to hard level. 
 > **Number of rows**: 19
