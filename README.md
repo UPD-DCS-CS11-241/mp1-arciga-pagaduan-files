@@ -1,5 +1,4 @@
 # Welcome to Egg Roll!
-> Note that the code documentation part is still not yet done. Apologies for the delay.
 
 Good day! Are you egg-cited to play the greatest game of all time? If you are seeing this, this is your sign to roll with us in ***Egg Roll***.
 
