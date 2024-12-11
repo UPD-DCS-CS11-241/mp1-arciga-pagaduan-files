@@ -312,15 +312,229 @@ This level is somehow a trivial level (depending on your perception) as it intro
 This section is for the instructors who will grade our project, as well as for (future) developers who are interested on improving our project. Also, there are patch notes or announcements in this section for the gamers or users of this game to be informed of the possible updates of the game.
 
 ## Code Documentation
-This section contains the code documentation and explanation of the `.py` files that are important for this project. The main library used for this project are the `pygame` library for the graphical user interface (GUI) and `pytest` library for the testing of the files.
-> This part is not yet finished.
+This section contains the code documentation and explanation of the `.py` files that are important for this project. The main library used for this project are the `pygame` library for the graphical user interface (GUI) and `pytest` library for the testing of the files. The file `mp1.py` is for the terminal version of the game, `test.py` is for the test cases, `gui.py` is for the main menu interface, and `game.py` is for the game interface.
 
 ### The `mp1.py` file
-Content
+The `mp1.py` file is the terminal version of the Egg Roll game - meaning that when it is run, it has no interface other than the one shown in the WSL terminal. It can be run to load a game level using `python3 mp1.py level1.in` (if you want to load `level1.in`). 
+```python
+import os
+import subprocess
+import sys
+import time
+from argparse import ArgumentParser
+```
+The modules `os`, `subprocess`, and `sys` are imported for the `clear_screen` function which is responsible for clearing the screen after every movement of the egg, `time` for the delay of every snapshot of the movement of the eggs, and the one with the `argparse` is to help in accepting two arguments for `python3` in the command-line interface as you open the game.
 
+ ```python
+def main(): #Handles the interaction with the player
+    parser = ArgumentParser()
+    parser.add_argument('stage_file')
+    args = parser.parse_args()
+
+
+    grid, num_moves, points = load_level(args.stage_file)
+    print(f"num of moves: {num_moves}")
+    prev_moves = []
+  ...
+  ...
+  if __name__ == "__main__":
+    main()
+```
+The `main` function is for the overall management of the game - from loading the level, displaying the grid, separating the input moves, up to applying the input moves. The one with the `ArgumentParser()` up to `.parse.args()` is the one responsible for adding a new argument to `python3 mp1.py <filename>` so that when `mp1.py` is run, the filename with it will appear through series of function in `mp1.py`. The game will then load the level using the `load_level` function. The previous moves that are typed will be appended on `prev_moves`. With the while loop inside this function, the function will run as long as the number of moves is greater than 0 and if there are any eggs or empty nests on every row in the grid. It will then clear the screen, display the grid through `display_grid` function, and print the previous moves, remaining moves, and points of the player. The program will accept moves which will then be passed on the `separate_moves` function and for every move in `valid_moves`, the function will call the `apply_move` function. At the end of the round, the previous moves, remaining moves, and score accumulated by the player will be flashed on the screen.
+
+ ```python
+def load_level(filename): #Reads the information located in the .in file
+    with open(filename, encoding="utf-8") as file:
+        num_rows = int(file.readline().strip())
+        num_moves = int(file.readline().strip())
+        grid = [list(file.readline().strip()) for _ in range(num_rows)]
+    return grid, num_moves, 0
+```
+The `load_level` function reads the information inside the file as represented by the argument `filename` which is a path. The first line in the file will be saved as `num_rows`, the second line as `num_moves`, and the remaining lines will be saved as `grid`. The function will return a grid, containing list of rows of emojis, number of moves available, and `0` as the initial point or score.
+
+ ```python
+def display_grid(grid): #Displays the grid
+    for row in grid:
+        print(''.join(row))
+```
+The `display_grid` function displays the grid on the terminal. It accepts one argument which is a grid or a list of rows of emojis. The function prints every list of rows of emojis and joins them into one row using for loop.
+
+ ```python
+def clear_screen(): #Clears the screen
+    if sys.stdout.isatty():
+        clear_cmd = 'cls' if os.name == 'nt' else 'clear'
+        subprocess.run([clear_cmd])
+```
+
+The `clear_screen` function clears the terminal whenever it is called. This is usually called in the `main` function wherein every snapshot of the movement is displayed. 
+
+ ```python
+def separate_moves(args): #Accepts valid moves and discards irrelevant inputs
+    if isinstance(args, str):
+        return [move.lower() for move in args if move.lower() in 'lrfb']
+    else:
+        return []
+```
+
+The `separate_moves` function accepts `args` as its argument which could be any type. This string is the input provided by the player when the "Enter move/s:" is shown on the terminal. The function checks through `isinstance()` if the `args` is a string. If it is a string, it will return a list of characters or letters if the letters are in 'lfrb', and an empty list if otherwise.
+
+ ```python
+def apply_move(grid, move, points): #Links the egg's movements within the grid to the inputs
+    if move == 'l':
+        grid, points = tilt_grid(grid, points, dx=0, dy=-1)
+    elif move == 'r':
+        grid, points = tilt_grid(grid, points, dx=0, dy=1)
+    elif move == 'f':
+        grid, points = tilt_grid(grid, points, dx=-1, dy=0)
+    elif move == 'b':
+        grid, points = tilt_grid(grid, points, dx=1, dy=0)
+    return grid, points
+ ```
+
+The `apply_move` function has three arguments: `grid` which is the list of rows of emojis loaded by the `load_level` function, `move` which is the character in 'lfrb', and `points` which is the points accumulated by the player. Through `if` statements, the function checks the appropriate action to do depending on the `move`. If `move == 'l'`, it will call `tilt_grid` with `dy = -1`. The `dy` and `dx` will change depending on the value of `move`.  The function will return an updated grid which is a list of rows of emojis and the updated points.
+
+ ```python
+def tilt_grid(grid, points, dx, dy): #Handles the two kinds of movements in the grid: from row to row, and from column to column
+    num_rows = len(grid)
+    num_cols = len(grid[0])
+    moved = True
+
+    while moved:  
+        moved = False
+        new_grid = [row[:] for row in grid]  
+
+        if dx == 0 and dy != 0: 
+            for r in range(num_rows):
+                row = ''.join(grid[r])
+                if dy == -1: 
+                    shifted_row, row_moved, updated_points = step_shift_eggs_with_rules(row, points, 'left')
+                elif dy == 1: 
+                    shifted_row, row_moved, updated_points = step_shift_eggs_with_rules(row, points, 'right')
+                new_grid[r] = list(shifted_row)
+                points = updated_points
+                moved = moved or row_moved
+        ...
+        ...
+        if moved:
+            clear_screen()
+            display_grid(new_grid)
+            time.sleep(0.3)  
+        grid = [row[:] for row in new_grid] 
+    return grid, points
+ ```
+
+The `tilt_grid` function accepts four arguments: `grid` which is the initial grid from the `apply_move` function, `points` which is the initial score from the `apply_move` function, `dx` is the vertical movement where `-1` tilts the grid up while `1` tilts the grid down, and `dy` is the horizontal movement where`-1` tilts the grid left while `1` tilts the grid right. It contains a while loop where the `new_grid` is created as a storage for the updated grid and `moved = False` is added so that if there are still cells or eggs that can still move, the egg will still move, making the `moved = True` in the later part of the code block. The code block will then check for the values of `dx` and `dy`. If the `dy != 0 and dx = 0`, it will check if the `dy` is equal to `-1` or `1`. Depending on `dy`, it will then call the function `step_shift_eggs_with_rules` to move the eggs to either left or right. The same goes to the condition if `dy = 0 and dx != 0` wherein if `dx` is equal to `-1` or `1`, it will call the function `step_shift_eggs_with_rules` to move the eggs to either up or down. For every iteration of row or column, the `new_grid` is then updated, and the `moved` is updated depending on whether a row or a column moved. If the value of `moved == True`, the screen will be cleared through the `clear_screen()`, the grid will be displayed through `display_grid()`, and a snapshot of the changing of the grid will be shown in the terminal through the `time.sleep()`. The function will then return the updated grid and points.
+
+ ```python
+def step_shift_eggs_with_rules(line, points, direction): #Moves the egg from left to right within the grid
+    empty_char = '🟩' 
+    frying_pan = '🍳'
+    nest = '🪹'
+    full_nest = '🪺'
+    line_list = list(line)
+    moved = False
+
+    if direction == 'left':
+        for i in range(1, len(line_list)):
+            if line_list[i] == '🥚':
+                if line_list[i - 1] == frying_pan: 
+                    line_list[i] = empty_char
+                    moved = True
+                    points -= 5
+                elif line_list[i - 1] == nest: 
+                    line_list[i - 1] = full_nest
+                    line_list[i] = empty_char
+                    moved = True
+                    points += 10
+                elif line_list[i - 1] == empty_char: 
+                    line_list[i - 1], line_list[i] = line_list[i], empty_char
+                    moved = True
+...
+...
+    return ''.join(line_list), moved, points
+ ```
+ 
+The `step_shift_eggs_with_rules` function is responsible for shifting the eggs to the left, right, up, or down depending on the argument `direction`. It has three arguments: `line` which is either a row or a column, `points` which is the initial points, and `direction`. It has variables for every emoji of grass, eggs, etc, and a variable `moved = False` which will be changed if the eggs in the `line` shifted, determining the `moved_any` on the `tilt_grid` function. The code block contains `if` statements depending on the `direction`, and it usually checks if the `frying_pan` is on the `direction` of the `egg` (which changes the egg tile into grass tile), or if the `nest` that is empty is on the direction of the egg (which changes the nest into a full nest), or if the `grass` is next to the egg (which changes the egg tile into grass tile and vice versa). The function returns a joined `line_list`, wherein the initial `line_list` is the value of `line` and the updated `line_list`is the one changed through index checking and changing of values on the list. It also returns `moved` if the eggs shifted and `points` if the player accumulated points for moving.
 
 ### The `test.py` file
-Content
+The `test.py` file contains the different test cases used to test the functions of the `mp1.py` file. You may check that it works through typing `pytest test.py`. You may insert a new test case by adding `assert function_name('input_depending_on_args') == correct_output` at the end of each function. The file imported the functions `separate_moves`, `step_shift_eggs_with_rules`, `tilt_grid`, and `apply_moves` from the `mp1.py` file. 
+
+```python
+def test_separate_moves():
+    assert separate_moves('ZZZZZF') == ['f']
+    assert separate_moves('') == []
+    assert separate_moves('abcdefghijklmnopqrstuvwxyz') == ['b', 'f', 'l', 'r']
+    assert separate_moves(1) == []
+    assert separate_moves(' ') == []
+    assert separate_moves('i am testing my input') == []
+    assert separate_moves('i love cs 11 so much') == ['l']
+    assert separate_moves('09176151201') == []
+    assert separate_moves('us2 ko na magpasko yeah') == []
+    assert separate_moves('lLfFrRbB') == ['l', 'l', 'f', 'f', 'r', 'r', 'b', 'b']
+```
+In the `test_separate_moves` function, there are several test cases wherein we checked if the `separate_moves` function works correctly for instances when a string of input (whether they are lowercase or uppercase, or with LBRF or none) is given or when a number or whitespace is given. When empty string, numbers, or whitespaces are given as input, the `separate_moves` returns an empty list, meaning that the function does not consider those inputs. Also, we checked if the function correctly extracts the LFRB letters in every possible input.
+```python
+def test_step_shift_with_eggs_with_rules():
+    assert step_shift_eggs_with_rules('🟩🥚🟩', 0, 'left') == ('🥚🟩🟩', True, 0)
+    assert step_shift_eggs_with_rules('🟩🥚🟩', 0, 'right') == ('🟩🟩🥚', True, 0)
+    assert step_shift_eggs_with_rules('🍳🥚🟩', 0, 'left') == ('🍳🟩🟩', True, -5)
+    assert step_shift_eggs_with_rules('🟩🥚🍳', 0, 'right') == ('🟩🟩🍳', True, -5)
+    assert step_shift_eggs_with_rules('🪹🥚🟩', 0, 'left') == ('🪺🟩🟩', True, 10)
+    assert step_shift_eggs_with_rules('🟩🥚🪹', 0, 'right') == ('🟩🟩🪺', True, 10)
+    assert step_shift_eggs_with_rules('🪺🥚🟩', 0, 'left') == ('🪺🥚🟩', False, 0)
+    assert step_shift_eggs_with_rules('🟩🥚🪺', 0, 'right') == ('🟩🥚🪺', False, 0)
+    assert step_shift_eggs_with_rules('🥚🥚🟩', 0, 'left') == ('🥚🥚🟩', False, 0)
+    assert step_shift_eggs_with_rules('🟩🥚🥚', 0, 'right') == ('🟩🥚🥚', False, 0)
+    assert step_shift_eggs_with_rules('🟩🥚🥚🟩', 0, 'left') == ('🥚🥚🟩🟩', True, 0)
+    assert step_shift_eggs_with_rules('🟩🥚🥚🟩', 0, 'right') == ('🟩🟩🥚🥚', True, 0)
+    assert step_shift_eggs_with_rules('🪹🥚🥚🟩', 0, 'left') == ('🪺🥚🟩🟩', True, 10)
+    assert step_shift_eggs_with_rules('🟩🥚🥚🪹', 0, 'right') == ('🟩🟩🥚🪺', True, 10)
+    assert step_shift_eggs_with_rules('🪺🥚🥚🟩', 0, 'left') == ('🪺🥚🥚🟩', False, 0)
+    assert step_shift_eggs_with_rules('🟩🥚🥚🪺', 0, 'right') == ('🟩🥚🥚🪺', False, 0)
+    assert step_shift_eggs_with_rules('🍳🥚🥚🟩', 0, 'left') == ('🍳🥚🟩🟩', True, -5)
+    assert step_shift_eggs_with_rules('🟩🥚🥚🍳', 0, 'right') == ('🟩🟩🥚🍳', True, -5)
+    assert step_shift_eggs_with_rules('', 0, 'left') == ('', False, 0)
+    assert step_shift_eggs_with_rules('', 0, 'right') == ('', False, 0)
+```
+In the `test_step_shift_eggs_with_rules` function, there are several test cases wherein we checked if the function correctly does the basic shifting such as left or right when there are only grass and eggs on the screen, penalty scenarios wherein there are frying pans involved, reward scenarios wherein there are empty nests involved, cases when there are two eggs and there is only one empty nests, cases when there are eggs and full nests (if the eggs will move or not), and empty strings if the rows do not have any icons. Note that the function `step_shift_eggs_with_rules` is a function that shifts the eggs one tile at a time (so if the frying pan is on the left, and there are three eggs moving to the left, only one egg will disappear as in the `mp1.py`, it is in the nested loop, one frame at a time). 
+```python
+def test_tilt_grid():
+    assert tilt_grid([['🟩'], ['🟩'], ['🥚'],], 0, -1, 0) == ([['🥚'], ['🟩'], ['🟩']], 0)
+    assert tilt_grid([['🪹'], ['🟩'], ['🥚'],], 0, -1, 0) == ([['🪺'], ['🟩'], ['🟩']], 10)
+    assert tilt_grid([['🍳'], ['🟩'], ['🥚'],], 0, -1, 0) == ([['🍳'], ['🟩'], ['🟩']], -5)
+    assert tilt_grid([['🥚'], ['🟩'], ['🥚'],], 0, -1, 0) == ([['🥚'], ['🥚'], ['🟩']], 0)
+    assert tilt_grid([['🪺'], ['🟩'], ['🥚'],], 0, -1, 0) == ([['🪺'], ['🥚'], ['🟩']], 0)
+    assert tilt_grid([['🥚'], ['🟩'], ['🟩'],], 0, 1, 0) == ([['🟩'], ['🟩'], ['🥚']], 0)
+    assert tilt_grid([['🥚'], ['🟩'], ['🪹'],], 0, 1, 0) == ([['🟩'], ['🟩'], ['🪺']], 10)
+    assert tilt_grid([['🥚'], ['🟩'], ['🍳'],], 0, 1, 0) == ([['🟩'], ['🟩'], ['🍳'], ], -5)
+    assert tilt_grid([['🥚'], ['🟩'], ['🥚'],], 0, 1, 0) == ([['🟩'], ['🥚'], ['🥚']], 0)
+    assert tilt_grid([['🥚'], ['🟩'], ['🪺'],], 0, 1, 0) == ([['🟩'], ['🥚'], ['🪺']], 0)
+    assert tilt_grid([['🟩', '🟩', '🥚']], 0, 0, -1) == ([['🥚', '🟩', '🟩']], 0)
+    assert tilt_grid([['🪹', '🟩', '🥚']], 0, 0, -1) == ([['🪺', '🟩', '🟩']], 10)
+    assert tilt_grid([['🍳', '🟩', '🥚']], 0, 0, -1) == ([['🍳', '🟩', '🟩']], -5)
+    assert tilt_grid([['🥚', '🟩', '🥚']], 0, 0, -1) == ([['🥚', '🥚', '🟩']], 0)
+    assert tilt_grid([['🪺', '🟩', '🥚']], 0, 0, -1) == ([['🪺', '🥚', '🟩']], 0)
+    assert tilt_grid([['🥚', '🟩', '🟩']], 0, 0, 1) == ([['🟩', '🟩', '🥚']], 0)
+    assert tilt_grid([['🥚', '🟩', '🪹']], 0, 0, 1) == ([['🟩', '🟩', '🪺']], 10)
+    assert tilt_grid([['🥚', '🟩', '🍳']], 0, 0, 1) == ([['🟩', '🟩', '🍳']], -5)
+    assert tilt_grid([['🥚', '🟩', '🥚']], 0, 0, 1) == ([['🟩', '🥚', '🥚']], 0)
+    assert tilt_grid([['🥚', '🟩', '🪺']], 0, 0, 1) == ([['🟩', '🥚', '🪺']], 0)
+```
+In the `test_tilt_grid` function, there are several test cases wherein we checked if the function correctly does the basic left, right, down, and up shifts in every scenario mentioned after this, penalty scenarios that involves frying pans, reward scenarios that involve empty nests, and scenarios that involve full nests. They were added as it was integral to the adherence to the game mechanics, and to make sure that the basic components of the game are correct in execution.
+```python
+def test_apply_move():
+    assert apply_move([['🟩', '🟩', '🥚']], 'l', 0) == ([['🥚', '🟩', '🟩']], 0)
+    assert apply_move([['🪹', '🟩', '🥚']], 'l', 0) == ([['🪺', '🟩', '🟩']], 10)
+    assert apply_move([['🍳', '🟩', '🥚']], 'l', 0) == ([['🍳', '🟩', '🟩']], -5)
+    assert apply_move([['🥚', '🟩', '🥚']], 'l', 0) == ([['🥚', '🥚', '🟩']], 0)
+    assert apply_move([['🪺', '🟩', '🥚']], 'l', 0) == ([['🪺', '🥚', '🟩']], 0)
+    assert apply_move([['🥚', '🟩', '🟩']], 'r', 0) == ([['🟩', '🟩', '🥚']], 0)
+    assert apply_move([['🥚', '🟩', '🪹']], 'r', 0) == ([['🟩', '🟩', '🪺']], 10)
+    assert apply_move([['🥚', '🟩', '🍳']], 'r', 0) == ([['🟩', '🟩', '🍳']], -5)
+    assert apply_move([['🥚', '🟩', '🥚']], 'r', 0) == ([['🟩', '🥚', '🥚']], 0)
+    assert apply_move([['🥚', '🟩', '🪺']], 'r', 0) == ([['🟩', '🥚', '🪺']], 0)
+```
+In the `test_apply_move` function, there are several test cases wherein we checked if the function correctly returns the expected output after applying a specific move depending on the players' input. There are basic test cases that checks the result of the function for different directions, penalty scenarios that involves eggs moving to frying pans, reward scenarios that involve eggs moving towards empty nests, and scenarios that involve eggs moving towards full nests. They were added to the set of test cases as they will check if the points are calculated correctly depending on where the egg lands, and if the correct icon was displayed at the end of every move.
 
 
 ### The `gui.py` file
@@ -373,7 +587,7 @@ Before explaining each function in the file, there are certain code blocks that 
 
 ```python
 # An excerpt from the main_menu() function
-# For creating clickable buttons
+# For creating CLICKABLE BUTTONS
 position_x, position_y = pygame.mouse.get_pos()
 ...
 exit_game_button = pygame.Rect(590, 570, 310, 90)
@@ -384,10 +598,24 @@ if exit_game_button.collidepoint((position_x, position_y)):
 ...
 screen.blit(transparent_exit_game_button, (590, 570))
 ```
-This particular code block is seen across functions in different variations. This code block is responsible for creating clickable buttons, as well as making sure that an action is done when these buttons are clicked. The one with the `pygame.mouse.get_pos()` is responsible for finding the position of the mouse pointer on the game screen, and this position are saved as `position_x` and `position_y`. 
-
-> To be continued
-
+This particular code block is seen across functions in different variations. This code block is responsible for creating clickable buttons, as well as making sure that an action is done when these buttons are clicked. The one with the `pygame.mouse.get_pos()` is responsible for finding the position of the mouse pointer on the game screen, and this position are saved as `position_x` and `position_y`. Every rectangular area is made by `pygame.Rect()` which has four arguments: starting x position, starting y position, width, and height. These rectangle areas are saved in variables such as `exit_game_button`.  There are also `if` statements with the function `.collidepoint()` with `position_x` and `position_y` as its argument. These statements check if the mouse pointer is within the rectangular area of the button and if the area is clicked on the mouse. Once clicked, a new frame will be shown on the screen as other functions will be called such as `settings(mode)`. The one with the `screen.blit(transparent....,(590,570))` makes the transparent buttons be on the screen so that there will be buttons that the players can click. It takes in two arguments, the starting x and starting y position.
+```python
+# An excerpt from the main_menu() function
+# For creating EVENT HANDLING
+		click = False
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+```
+The block of code above is responsible for event handling. Each function has this block of code, wherein it checks if there are specific keys in the `if` statements that are clicked. For instance, if the `X` on the top of the game window is clicked, the program will stop; if the left key on the mouse is clicked, the click will be equal to `True` -- meaning that a specific button is clicked; and if the `ESC` button is clicked, the game window will disappear and quit.
 ```python
 def main_menu(mode = 'light'):
     click = False
@@ -396,18 +624,273 @@ def main_menu(mode = 'light'):
             screen.blit(main_menu_light, (0, 0))
         else:
             screen.blit(main_menu_dark, (0, 0))
-            
-        position_x, position_y = pygame.mouse.get_pos()   
-		...
-        exit_game_button = pygame.Rect(590, 570, 310, 90)
-...
-screen.blit(transparent_exit_game_button, (590, 570))	
+	...
+	pygame.display.update()
+	mainClock.tick(60)	
 ```
-The `enter code here`
+The `main_menu` function is responsible for showing the main menu interface. It accepts a single argument: `mode` which as a default value `"light"` meaning that the game will load the light mode of the main menu interface by default, and when it is called again in other functions with `mode = "dark"`, it will show the dark mode. The screen will then be updated by the `.display.update()` function and the `.tick()` function is responsible for the frame per second to be passed when updating the screen.
+```python
+def levels(mode = "light", tutorials = "no"):
+    click = False
+    running = True
+    while running:
+        if mode == "light" and tutorials == "no":
+            screen.blit(levels_light,(0,0))
+        elif mode == "light" and tutorials == "yes":
+            screen.blit(tutorials_light, (0,0))
+        elif mode != "light" and tutorials == "no":
+            screen.blit(levels_dark,(0,0))
+        elif mode != "light" and tutorials == "yes":
+            screen.blit(tutorials_dark,(0,0))	
+    ...
+	pygame.display.update()
+	mainClock.tick(60)	
+```
+
+The `levels()` function is responsible for displaying the level selector interface for the main levels and tutorial levels, depending on the mode (light or dark) and if the function is called with yes or no as the tutorial. The function has two default values, `mode = "light"` and `tutorials = "no"`, meaning that it loads the main level selector in the light mode as default. This function is called mainly in the `main_menu` function wherein when the player clicks the Play button, the said function will call the `levels` function. 
+
+```python
+def loading(file, mode = "light", tutorials = "no"):
+    running = True
+    while running:
+        if file == 1:
+            if mode == "light":
+                screen.blit(loading_1_light,(0,0))
+                pygame.display.flip()
+                pygame.time.wait(5000)
+                if tutorials != "no":
+                    game.start_gui_with_level("tutorial1.in")
+                else: 
+                    game.start_gui_with_level("level1.in")
+            else:
+                screen.blit(loading_1_dark,(0,0))
+                pygame.display.flip()
+                pygame.time.wait(5000)
+                if tutorials != "no":
+                    game.start_gui_with_level("tutorial1.in", mode)
+                else: 
+                    game.start_gui_with_level("level1.in", mode)
+
+    ...
+	pygame.display.update()
+	mainClock.tick(60)	
+```
+
+The `loading` function is responsible for the loading screen through `screen.blit(image_name, (0,0))` for 5 seconds through `pygame.time.wait(5000)`, as well as the game interface itself through calling `game.start_gui_with_level(filename)` wherein the `game.start_gui_with_level()` function means that the `start_gui_with_level()` function from the `game.py` is called, which basically loads the game interface. The code block consists of several `if` statements which checks the value of the filename - which corresponds to what level of the game is asked and also checks if the level being asked is a tutorial level or not.
+```python
+def settings(mode = "light"):
+    click = False
+    running = True
+    while running:
+        if mode == "light":
+            screen.blit(settings_light,(0,0))
+        else:
+            screen.blit(settings_dark,(0,0))
+    ...
+	pygame.display.update()
+	mainClock.tick(60)	
+```
+The `settings` function loads the settings interface. When called, it has the default value `mode = "light"`, meaning that the default settings interface is in light mode. It also has sections in the code that creates clickable buttons and event handling.
+```python
+def control_keys_or_credits(mode = "light", use = "control_keys"): 
+    running = True
+    click = False
+    while running:
+        if mode == "light" and use == "control_keys":
+            screen.blit(control_keys_light,(0,0))
+        elif mode != "light" and use == "control_keys":
+            screen.blit(control_keys_dark, (0,0))
+        elif mode == "light" and use != "control_keys":
+            screen.blit(credits_light,(0,0))
+        else:
+            screen.blit(credits_dark,(0,0))
+	pygame.display.update()
+	mainClock.tick(60)	
+```
+The `control_keys_or_credits` function loads either the control keys interface or the credits interface, depending if the function has only 0-1 arguments or if the mode is set to `"control_keys"` or `"credits"`. We combined the loading of credits and control keys interface since they have the same interface with different contents. The `if` statements handle whether the one being loaded on the screen is the control keys or the credits interface and whether they will be in light or dark mode. Same as the other functions, it also has sections in the code that creates clickable buttons and event handling.
+```python
+def exit_game(mode = "light"):
+    running = True
+    click = False
+    while running:
+        if mode == "light":
+            screen.blit(sure_light,(0,0))
+        else:
+            screen.blit(sure_dark,(0,0))
+    ...
+	pygame.display.update()
+	mainClock.tick(60)	
+```
+The `exit_game` function loads the confirmation screen if the player clicked the Exit Game button at the main menu interface. It accepts one argument: `mode` which has the default value `"light"`, meaning that if the `exit_game` is called under the `main_menu` function with 0-1 argument, provided that when 1 argument is used (`"light"`), it will show the light mode of the confirmation screen. When the Yes button is clicked, it will exit the game, and clicking the No button will call the `main_menu()` function with the argument `mode` that depends on the mode passed onto the `exit_game` function.  Same as the other functions, it also has sections in the code that creates clickable buttons and event handling.
+
+    main_menu()
+This is at the last part of the `gui.py` code which is important since when `python3 gui.py` is called, it will show the main menu interface. If this is removed, the main menu will not show up.
 
 
 ### The `game.py` file
-Content
+The `game.py` file contains the different functions that enable our team to create the game interface. To give an overview on how the whole file works, we used the `pygame` library to create features such as button and loading images onto the screen. The `game.py` shows the different assets or the icons used to load the nests, eggs, etc. on the game screen through calling `screen.blit()` across the document. It also contains the logic behind how the points are calculated and to determine if the game is over or not.
+```python
+import pygame
+import sys
+from pygame.locals import KEYDOWN, K_UP, K_DOWN, K_LEFT, K_RIGHT, K_f, K_b, K_l, K_r, QUIT, K_DELETE
+SCREEN_WIDTH = 960
+SCREEN_HEIGHT = 768
+FPS = 60
+```
+The code block above imports `pygame` as it is the library used for loading screen frames, `sys` for system commands such as quitting the game, and `KEYDOWN, K_UP, and others` as they will be used in the `start_with_gui_level()` function to detect if the keys clicked on the keyboard are the letter keys or the arrow keys for the game to progress. It also contains the global variables for the screen width, screen height, and frame per second which are the basis to the screen resolution of the game. We used 960 x 768 pixels as it is not large (or wide enough) but it is also not small. We also used 60 frames per second as it is one of the most common FPS in games.
+```python
+game_light = pygame.image.load('images/game_light.png')
+game_dark = pygame.image.load('images/game_dark.png')
+win_light = pygame.image.load('images/win_light.png')
+win_dark = pygame.image.load('images/win_dark.png')
+lose_light = pygame.image.load('images/lose_light.png')
+lose_dark = pygame.image.load('images/lose_dark.png')
+```
+The block of code above assigns the pictures on the `images` folder loaded via `pygame.image.load()` into variables. This is important as it will be used in the `start_gui_with_level()` function on loading the game interface screen and the frames that show you if you win or lose the game.
+```python
+def load_assets():
+    assets = {
+        "egg": pygame.image.load("assets/egg.png"),
+        "nest": pygame.image.load("assets/nest.png"),
+        ...
+    }
+    for key, image in assets.items():
+        assets[key] = pygame.transform.scale(image, (81, 81))
+    return assets
+```
+The `load_assets` function is responsible for loading the icons in the game such as the eggs, grass, walls, frying pans, and nests. It has a dictionary `assets` that has strings of the description of the icons as the keys and the object being loaded via `pygame.image.load()` as the values. These objects or images will be scaled down to 81 by 81 pixels via the `pygame.transform.scale`, and the function will return a dictionary of these scaled images.
+```python
+def display_grid(screen, grid, assets):
+    for row_idx, row in enumerate(grid):
+        for col_idx, cell in enumerate(row):
+            x, y = col_idx * 27, row_idx * 27
+            if cell == '🥚':
+                screen.blit(assets['egg'], (x, y))
+            ...
+```
+The `display_grid` function is responsible for displaying the grid of the ones in the `.in` files and the grids on the `.in` files will then be represented by every value in the dictionary `assets` through series of `if` statements. It accepts three arguments: `screen` which pertains to the game screen with width and height which will be defined on the `start_with_gui_level` function, the `grid` which will be also defined in the said function as it will be saved by calling the `load_level` function, and the `assets` which will be defined as the `start_with_gui_level` calls `display_grid`.  The nested `for` loops iterate each row first through the `for row_idx...` and column through `for col_idx...`. The x and y are the basis for the starting position where the assets or icons will be placed. The multiplier here is 27 since through trial and error, we observed that the width and height of every cell or icon must be 1/3 of the dimension of the scaled assets or icons in the `display_grid` function (81 x 81). The nested loops are responsible for iterating every row and every column of the `grid`, filling the cells or the square areas with the icons in the `assets` (substituting eggs emoji with the image of an egg for example).
+
+```python
+def load_level(filename):
+    with open(filename, encoding="utf-8") as file:
+        num_rows = int(file.readline().strip())
+        num_moves = int(file.readline().strip())
+        grid = [list(file.readline().strip()) for _ in range(num_rows)]
+    return grid, num_moves, 0
+```
+The `load_level` function is responsible for loading the files in `.in` format. It accepts `filename` path as the argument. The function then opens the file in UTF-8 format using `with open... as file`. The first line of the file is saved as `num_rows`, the second line as `num_moves`, and the next remaining lines are saved as a list of lines in the variable `grid`. The function returns the `grid` as a list of lines of emojis, `num_moves` representing the number of moves available, and `0` since it will be saved as the initial point or score in the `start_gui_with_level` function.
+```python
+def apply_move(grid, move, points):
+    prev_grid = [row[:] for row in grid]  
+    if move == 'l':
+        grid, points = tilt_grid(grid, points, dx=0, dy=-1)
+    elif move == 'r':
+        grid, points = tilt_grid(grid, points, dx=0, dy=1)
+    elif move == 'f':
+        grid, points = tilt_grid(grid, points, dx=-1, dy=0)
+    elif move == 'b':
+        grid, points = tilt_grid(grid, points, dx=1, dy=0)
+    
+    if grid != prev_grid:
+        return grid, points, True  
+    
+    return grid, points, False 
+```
+The `apply_move` function accepts three arguments: `grid` which is defined when `apply_move` is called by the `start_gui_with_level` (the grid is the list of lines containing emojis from the `.in` files), `move` which can be `'f'`, `'l'`, `b`, or `r`, and `points` which is the initial score before moving the icons on the desired direction. It saves the initial grid in the `prev_grid` variable as a list of rows of emojis. There will be `if` statements that check your `move` value. Depending on the `move` value, it will call `tilt_grid` to tilt the cells on the grid, getting the updated grid and points. At the end of the function, it will then check if the updated grid is equal to the initial grid. If `True`, it will return the initial grid, initial points, and `False` -- signifying that there will be no movement. Otherwise, it will return the updated grid, updated points, and `True` -- signifying that some cells have shifted.
+```python
+def tilt_grid(grid, points, dx, dy):
+    num_rows = len(grid)
+    num_cols = len(grid[0])
+    moved = True
+
+    while moved:
+        moved = False
+        new_grid = [row[:] for row in grid]
+
+        if dx == 0 and dy != 0:  
+            for r in range(num_rows):
+                row = ''.join(grid[r])
+                if dy == -1: 
+                    shifted_row, row_moved, updated_points = step_shift_eggs_with_rules(row, points, 'left')
+                elif dy == 1:
+                    shifted_row, row_moved, updated_points = step_shift_eggs_with_rules(row, points, 'right')
+                new_grid[r] = list(shifted_row)
+                points = updated_points
+                moved = moved or row_moved
+             ...
+             ...
+             ...
+             ...
+    return grid, points             
+```
+The `tilt_grid` function is similar to the one in the `mp1.py` and it accepts four arguments: `grid` which is the initial grid from the `apply_move` function, `points` which is the initial score from the `apply_move` function, `dx` is the vertical movement where `-1` tilts the grid up while `1` tilts the grid down, and `dy` is the horizontal movement where`-1` tilts the grid left while `1` tilts the grid right. It contains a while loop where the `new_grid` is created as a storage for the updated grid and `moved = False` is added so that if there are still cells or eggs that can still move, the egg will still move, making the `moved = True` in the later part of the code block. The code block will then check for the values of `dx` and `dy`. If the `dy != 0 and dx = 0`, it will check if the `dy` is equal to `-1` or `1`. Depending on `dy`, it will then call the function `step_shift_eggs_with_rules` to move the eggs to either left or right. The same goes to the condition if `dy = 0 and dx != 0` wherein if `dx` is equal to `-1` or `1`, it will call the function `step_shift_eggs_with_rules` to move the eggs to either up or down. For every iteration of row or column, the `new_grid` is then updated, and the `moved` is updated depending on whether a row or a column moved. The function will then return the updated grid and points.
+
+```python
+def step_shift_eggs_with_rules(line, points, direction):
+    grass = '🟩'
+    frying_pan = '🍳'
+    nest = '🪹'
+    full_nest = '🪺'
+    line_list = list(line)
+    moved = False
+
+    if direction == 'left':
+        for i in range(1, len(line_list)):
+            if line_list[i] == '🥚':
+                if line_list[i - 1] == frying_pan: 
+                    line_list[i] = grass
+                    moved = True
+                    points -= 5
+                elif line_list[i - 1] == nest: 
+                    line_list[i - 1] = full_nest
+                    line_list[i] = grass
+                    moved = True
+                    points += 10
+                elif line_list[i - 1] == grass: 
+                    line_list[i - 1], line_list[i] = line_list[i], grass
+                    moved = True
+    ...
+    ...
+    ...
+    return ''.join(line_list), moved, points
+```
+The `step_shift_eggs_with_rules` function is similar to the one in the `mp1.py` and it is responsible for shifting the eggs to the left, right, up, or down depending on the argument `direction`. It has three arguments: `line` which is either a row or a column, `points` which is the initial points, and `direction`. It has variables for every emoji of grass, eggs, etc, and a variable `moved = False` which will be changed if the eggs in the `line` shifted, determining the `moved_any` on the `tilt_grid` function. The code block contains `if` statements depending on the `direction`, and it usually checks if the `frying_pan` is on the `direction` of the `egg` (which changes the egg tile into grass tile), or if the `nest` that is empty is on the direction of the egg (which changes the nest into a full nest), or if the `grass` is next to the egg (which changes the egg tile into grass tile and vice versa). The function returns a joined `line_list`, wherein the initial `line_list` is the value of `line` and the updated `line_list`is the one changed through index checking and changing of values on the list. It also returns `moved` if the eggs shifted and `points` if the player accumulated points for moving.
+
+```python
+def is_game_over(grid, num_moves):
+    empty_nests = sum(row.count('🪹') for row in grid)
+    eggs = sum(row.count('🥚') for row in grid)
+    return empty_nests == 0 or eggs == 0 or num_moves == 0
+```
+The `is_game_over` function checks if the game is over by checking whether the `empty_nests == 0`, `eggs == 0`, or `num_moves == 0` through the function `.count()`. In the `empty_nests`, the count of empty nests will be checked for every row, and their sum will be added. Same goes for the `eggs` where the count of the eggs will be checked in every row. The function returns `True` if either the empty nests, eggs, or number of moves count is 0 and `False` if otherwise.
+```python
+def check_if_win_or_lose(grid):
+    empty_nests = sum(row.count('🪹') for row in grid)
+    if empty_nests == 0:
+        return True
+    else:
+        return False
+```
+The `check_if_win_or_lose` function checks if at the end of the movement (or gaming session), the player loses or wins by checking the sum of the count of empty nests per row which is saved in the `empty nests` variable. If `empty_nests == 0`, the function returns `True`, signifying that the player wins the game, and `False` if otherwise, signifying that the player loses the game.
+```python
+def start_gui_with_level(filename, mode="light"):
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    ...
+```
+The `start_gui_with_level` function is responsible for doing everything that involves the `.in` files: from loading the files, applying the moves, checking if the game is over, and others by calling several functions throughout the `game.py` file. It starts by initializing the `pygame` through `pygame.init()`, the screen with width and height, the caption for the game window, and the clock for the time within the game (for the frame per second). The function accepts two arguments: the `filename` which is a path of the file and the `mode` (the default is `"light"`, and calling the function with one argument means that the function will load the game screen in light mode). The `load_assets` will then be called so that there will be scaled icons saved in `assets` variable. The file is then loaded by calling the `load_level` function, extracting the `grid`, number of moves, and initial points. It has a while loop which checks for every event or action that the player does on the keyboard or the game window. The `if` statements with the `KEYDOWN` and other conditions with `K` is for checking every event or action on the keyboard. If the X on the game window is pressed, the game window disappears. Pressing the `UP` arrow key or `F` calls the function `apply_move` with `'f'` as its `direction`, pressing the `DOWN`arrow key or `B` calls the function `apply_move` with `'b'` as its `direction`, pressing the `LEFT` arrow key or `L` calls the function `apply_move` with `'l'` as its `direction`, and pressing the `RIGHT` arrow key or `R` calls the function `apply_move` with `'r'` as its `direction`. The movement done is then appended on the `prev_moves`. The screen is shown through the `screen.blit(...)` call, which shows the light mode of the game interface if the `mode = "light"` and dark mode if `mode = "dark"`.  The function `display_grid` is called to display the contents of the file, substituting every emojis into their corresponding icons in the `assets`. The previous moves, number of moves available, and points are displayed through the code below. Note that the previous moves will only be shown the `prev_moves` is not an empty list.
+```python
+        if prev_moves == []:
+            pass
+        else:
+            prev_moves_text = font.render(f"{''.join(prev_moves)}", True, (121,78,7))
+            screen.blit(prev_moves_text, (315,583))
+        moves_text = font.render(f"{num_moves}", True, (121, 78, 7))
+        screen.blit(moves_text, (315,623))
+        points_text = font.render(f"{points}", True, (121, 78, 7))
+        screen.blit(points_text, (315, 668))
+```
+The `font.render()` is responsible for making a text object with arguments `str`, `bool` for smooth display of texts, and `(a,b,c)` representing the RGB code for the color of the text. The `is_game_over` is then called through `if` statements for every round to check if the game is over. After checking if the game was over, the `check_if_win_or_lose` is called to check if the player wins or lose which is used to determine what frame and texts to display (through `pygame.display.flip()`) on the screen. 
 
 ### The `assets` folder
 The `assets` folder contains the icons for the empty nests, full nests, eggs, grass, walls, and frying pans to be used in the game interface. All of these icons were made using Canva elements.
