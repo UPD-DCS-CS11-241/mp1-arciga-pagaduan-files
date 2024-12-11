@@ -1,6 +1,5 @@
 import pygame
 import sys
-from argparse import ArgumentParser
 from pygame.locals import KEYDOWN, K_UP, K_DOWN, K_LEFT, K_RIGHT, K_f, K_b, K_l, K_r, QUIT, K_DELETE
 
 SCREEN_WIDTH = 960
@@ -265,8 +264,3 @@ def start_gui_with_level(filename, mode="light"):
 
     pygame.quit()
     sys.exit()
-
-if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument("level_file", help="Path to the level file", type=str)
-    args = parser.parse
