@@ -37,7 +37,10 @@ def main(): #Handles the interaction with the player
     display_grid(grid)
     print(f"Previous moves: {''.join(prev_moves)}")
     print(f"Remaining moves: {num_moves}")
-    print(f"Points: {points + (num_moves) * 2}")
+    if any('🪹' in row for row in grid):
+        print(f"Points: {points}")
+    else:
+        print(f"Points: {points + (num_moves) * 2}")
     
 
 def load_level(filename): #Reads the information located in the .in file
