@@ -23,13 +23,13 @@ def load_assets():
         "wall": pygame.image.load("assets/wall.png")
     }
     for key, image in assets.items():
-        assets[key] = pygame.transform.scale(image, (100, 100))
+        assets[key] = pygame.transform.scale(image, (81, 81))
     return assets
 
 def display_grid(screen, grid, assets):
     for row_idx, row in enumerate(grid):
         for col_idx, cell in enumerate(row):
-            x, y = col_idx * 33, row_idx * 33
+            x, y = col_idx * 27, row_idx * 27
             if cell == '🥚':
                 screen.blit(assets['egg'], (x, y))
             elif cell == '🪹':
