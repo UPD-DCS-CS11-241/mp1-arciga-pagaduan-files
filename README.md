@@ -1,3 +1,6 @@
+**Note that for the Sphinx-based documentation, you may see it by clicking the _build (folder) > html (folder) > _modules (folder) > index.html**
+In the _modules folder, you must see the following files: game.html, gui.html, index.html, mp1.html, mp1_classes.html, test.html, and the_dev_notes.html.
+
 # Welcome to Egg Roll!
 
 Good day! Are you egg-cited to play the greatest game of all time? If you are seeing this, this is your sign to roll with us in ***Egg Roll***.
