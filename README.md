@@ -6,6 +6,8 @@ In the _modules folder, you must see the following files: game.html, gui.html, i
 
 Inside the the_dev_notes.html are the features added in the game such as the leaderboard and other references (acknowledgments) for the project. Also, on other .html files, you can see the documentation for the .py files on this repository.
 
+The instructions on how to run Pyright, mypy, the test cases, the GUI of the game, and the terminal version of the game are already in the the_dev_notes.html and the_dev_notes.py.
+
 The information or documentation below is for the older version of Egg Roll (without classes, Pyright, and all).
 
 # Welcome to Egg Roll!
