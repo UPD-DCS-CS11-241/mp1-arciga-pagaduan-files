@@ -164,3 +164,12 @@ def test_process_lines() -> None:
     assert process_lines(['🪹🥚🥚'], 0, 'right') == (['🪹🥚🥚'], 0, False)
     assert process_lines(['🟩🥚🪹', '🍳🥚🟩'], 0, 'right') == (['🟩🟩🪺', '🍳🟩🥚'], 10, True)
     assert process_lines(['🪺🥚🟩', ''], 0, 'left') == (['🪺🥚🟩', ''], 0, False)
+
+
+# The following below is added for the Sphinx documentation generation:
+# if __name__ == "__main__":
+#    test_apply_move()
+#    test_process_lines()
+#    test_tilt_grid()
+#    test_shift_eggs()
+#    test_separate_moves()
