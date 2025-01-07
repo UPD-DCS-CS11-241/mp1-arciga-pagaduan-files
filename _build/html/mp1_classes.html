@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mp1_classes module &mdash; Egg Roll December 8, 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e0c65429"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="test module" href="test.html" />
+    <link rel="prev" title="mp1 module" href="mp1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Egg Roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mp1</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="game.html">game module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gui.html">gui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp1.html">mp1 module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mp1_classes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mp1_classes.Board"><code class="docutils literal notranslate"><span class="pre">Board</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Board.egg"><code class="docutils literal notranslate"><span class="pre">Board.egg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Board.empty_nest"><code class="docutils literal notranslate"><span class="pre">Board.empty_nest</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Board.full_nest"><code class="docutils literal notranslate"><span class="pre">Board.full_nest</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Board.grass"><code class="docutils literal notranslate"><span class="pre">Board.grass</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Board.pan"><code class="docutils literal notranslate"><span class="pre">Board.pan</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Board.wall"><code class="docutils literal notranslate"><span class="pre">Board.wall</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mp1_classes.EventHandler"><code class="docutils literal notranslate"><span class="pre">EventHandler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.EventHandler.process_events"><code class="docutils literal notranslate"><span class="pre">EventHandler.process_events()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.EventHandler.reset_click"><code class="docutils literal notranslate"><span class="pre">EventHandler.reset_click()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mp1_classes.LevelsDarkImages"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsDarkImages.levels_dark"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages.levels_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsDarkImages.loading_1_dark"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages.loading_1_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsDarkImages.loading_2_dark"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages.loading_2_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsDarkImages.loading_3_dark"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages.loading_3_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsDarkImages.loading_4_dark"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages.loading_4_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsDarkImages.loading_5_dark"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages.loading_5_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsDarkImages.main_menu_dark"><code class="docutils literal notranslate"><span class="pre">LevelsDarkImages.main_menu_dark</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mp1_classes.LevelsLightImages"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsLightImages.levels_light"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages.levels_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsLightImages.loading_1_light"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages.loading_1_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsLightImages.loading_2_light"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages.loading_2_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsLightImages.loading_3_light"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages.loading_3_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsLightImages.loading_4_light"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages.loading_4_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsLightImages.loading_5_light"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages.loading_5_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.LevelsLightImages.main_menu_light"><code class="docutils literal notranslate"><span class="pre">LevelsLightImages.main_menu_light</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mp1_classes.Moves"><code class="docutils literal notranslate"><span class="pre">Moves</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Moves.backward"><code class="docutils literal notranslate"><span class="pre">Moves.backward</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Moves.forward"><code class="docutils literal notranslate"><span class="pre">Moves.forward</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Moves.leftward"><code class="docutils literal notranslate"><span class="pre">Moves.leftward</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.Moves.rightward"><code class="docutils literal notranslate"><span class="pre">Moves.rightward</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mp1_classes.SettingsDarkImages"><code class="docutils literal notranslate"><span class="pre">SettingsDarkImages</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsDarkImages.control_keys_dark"><code class="docutils literal notranslate"><span class="pre">SettingsDarkImages.control_keys_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsDarkImages.credits_dark"><code class="docutils literal notranslate"><span class="pre">SettingsDarkImages.credits_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsDarkImages.leaderboard_dark"><code class="docutils literal notranslate"><span class="pre">SettingsDarkImages.leaderboard_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsDarkImages.settings_dark"><code class="docutils literal notranslate"><span class="pre">SettingsDarkImages.settings_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsDarkImages.sure_dark"><code class="docutils literal notranslate"><span class="pre">SettingsDarkImages.sure_dark</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsDarkImages.tutorials_dark"><code class="docutils literal notranslate"><span class="pre">SettingsDarkImages.tutorials_dark</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mp1_classes.SettingsLightImages"><code class="docutils literal notranslate"><span class="pre">SettingsLightImages</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsLightImages.control_keys_light"><code class="docutils literal notranslate"><span class="pre">SettingsLightImages.control_keys_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsLightImages.credits_light"><code class="docutils literal notranslate"><span class="pre">SettingsLightImages.credits_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsLightImages.leaderboard_light"><code class="docutils literal notranslate"><span class="pre">SettingsLightImages.leaderboard_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsLightImages.settings_light"><code class="docutils literal notranslate"><span class="pre">SettingsLightImages.settings_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsLightImages.sure_light"><code class="docutils literal notranslate"><span class="pre">SettingsLightImages.sure_light</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mp1_classes.SettingsLightImages.tutorials_light"><code class="docutils literal notranslate"><span class="pre">SettingsLightImages.tutorials_light</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="the_dev_notes.html">the_dev_notes module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Egg Roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mp1</a></li>
+      <li class="breadcrumb-item active">mp1_classes module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mp1_classes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mp1_classes">
+<span id="mp1-classes-module"></span><h1>mp1_classes module<a class="headerlink" href="#module-mp1_classes" title="Link to this heading"></a></h1>
+<p>The mp1_classes.py file is for creating classes
+that define the different movements and 
+emojis used for the creation of the game.
+These classes will then be used for the mp1.py
+file, specifically for the apply_move and
+shift_eggs functions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mp1_classes.Board">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mp1_classes.</span></span><span class="sig-name descname"><span class="pre">Board</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wall</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'🧱'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grass</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'🟩'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pan</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'🍳'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'🥚'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_nest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'🪹'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_nest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'🪺'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mp1_classes.html#Board"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.Board" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is for defining the wall, grass,
+pan, egg, empty nest, and full nest emojis
+to be used for the shift_eggs function in 
+the mp1.py file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Board.egg">
+<span class="sig-name descname"><span class="pre">egg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'🥚'</span></em><a class="headerlink" href="#mp1_classes.Board.egg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Board.empty_nest">
+<span class="sig-name descname"><span class="pre">empty_nest</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'🪹'</span></em><a class="headerlink" href="#mp1_classes.Board.empty_nest" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Board.full_nest">
+<span class="sig-name descname"><span class="pre">full_nest</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'🪺'</span></em><a class="headerlink" href="#mp1_classes.Board.full_nest" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Board.grass">
+<span class="sig-name descname"><span class="pre">grass</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'🟩'</span></em><a class="headerlink" href="#mp1_classes.Board.grass" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Board.pan">
+<span class="sig-name descname"><span class="pre">pan</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'🍳'</span></em><a class="headerlink" href="#mp1_classes.Board.pan" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Board.wall">
+<span class="sig-name descname"><span class="pre">wall</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'🧱'</span></em><a class="headerlink" href="#mp1_classes.Board.wall" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mp1_classes.EventHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mp1_classes.</span></span><span class="sig-name descname"><span class="pre">EventHandler</span></span><a class="reference internal" href="_modules/mp1_classes.html#EventHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.EventHandler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is for handling event handling of the gui.py which makes
+the code in the gui.py much cleaner and simpler.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mp1_classes.EventHandler.process_events">
+<span class="sig-name descname"><span class="pre">process_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'main_menu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'levels'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'settings'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'leaderboard'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'control'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'exit'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'end_game'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mp1_classes.html#EventHandler.process_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.EventHandler.process_events" title="Link to this definition"></a></dt>
+<dd><p>The block of code above is responsible for event handling. 
+Each function has this block of code, wherein it checks if 
+there are specific keys in the if statements that are clicked. 
+For instance, if the X on the top of the game window is clicked, 
+the program will stop; if the left key on the mouse is clicked, 
+the click will be equal to True – meaning that a specific 
+button is clicked; and if the ESC button is clicked, the 
+function will return to True which is needed to carry out the 
+different functions in the gui.py code. Also, the DELETE key
+is functional here when DELETE key is pressed after the game
+round in the game.py.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mp1_classes.EventHandler.reset_click">
+<span class="sig-name descname"><span class="pre">reset_click</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mp1_classes.html#EventHandler.reset_click"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.EventHandler.reset_click" title="Link to this definition"></a></dt>
+<dd><p>This function is for resetting the click to False in the
+gui.py file.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mp1_classes.</span></span><span class="sig-name descname"><span class="pre">LevelsDarkImages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_menu_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_1_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_2_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_3_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_4_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_5_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mp1_classes.html#LevelsDarkImages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.LevelsDarkImages" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The class Levels_Dark_Images is for assigning the object or picture 
+for the main menu, level selector, and loading screens into variables. 
+As seen in the code, pygame.image.load() is primarily used to 
+load the images and frames for the interfaces of the game. These 
+frames are stored in the images folder. When you just put the 
+filename as the argument, the game will not load and the terminal 
+will tell you that the images are not in the current directory or 
+folder. The variables are also named according to whether the frames 
+are for light or dark mode.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages.levels_dark">
+<span class="sig-name descname"><span class="pre">levels_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsDarkImages.levels_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages.loading_1_dark">
+<span class="sig-name descname"><span class="pre">loading_1_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsDarkImages.loading_1_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages.loading_2_dark">
+<span class="sig-name descname"><span class="pre">loading_2_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsDarkImages.loading_2_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages.loading_3_dark">
+<span class="sig-name descname"><span class="pre">loading_3_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsDarkImages.loading_3_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages.loading_4_dark">
+<span class="sig-name descname"><span class="pre">loading_4_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsDarkImages.loading_4_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages.loading_5_dark">
+<span class="sig-name descname"><span class="pre">loading_5_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsDarkImages.loading_5_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsDarkImages.main_menu_dark">
+<span class="sig-name descname"><span class="pre">main_menu_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsDarkImages.main_menu_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mp1_classes.</span></span><span class="sig-name descname"><span class="pre">LevelsLightImages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_menu_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_1_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_2_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_3_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_4_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loading_5_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mp1_classes.html#LevelsLightImages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.LevelsLightImages" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The class Levels_Light_Images is for assigning the object or picture 
+for the main menu, level selector, and loading screens into variables. 
+As seen in the code, pygame.image.load() is primarily used to load 
+the images and frames for the interfaces of the game. These frames are 
+stored in the images folder. When you just put the filename as the argument, 
+the game will not load and the terminal will tell you that the 
+images are not in the current directory or folder. The variables 
+are also named according to whether the frames are for light or 
+dark mode.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages.levels_light">
+<span class="sig-name descname"><span class="pre">levels_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsLightImages.levels_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages.loading_1_light">
+<span class="sig-name descname"><span class="pre">loading_1_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsLightImages.loading_1_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages.loading_2_light">
+<span class="sig-name descname"><span class="pre">loading_2_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsLightImages.loading_2_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages.loading_3_light">
+<span class="sig-name descname"><span class="pre">loading_3_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsLightImages.loading_3_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages.loading_4_light">
+<span class="sig-name descname"><span class="pre">loading_4_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsLightImages.loading_4_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages.loading_5_light">
+<span class="sig-name descname"><span class="pre">loading_5_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsLightImages.loading_5_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.LevelsLightImages.main_menu_light">
+<span class="sig-name descname"><span class="pre">main_menu_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.LevelsLightImages.main_menu_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mp1_classes.Moves">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mp1_classes.</span></span><span class="sig-name descname"><span class="pre">Moves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">leftward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'l'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rightward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'f'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backward</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'b'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mp1_classes.html#Moves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.Moves" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is for defining the leftward,
+rightward, forward, and backward movements 
+to be used for the apply_move function in
+the mp1.py file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Moves.backward">
+<span class="sig-name descname"><span class="pre">backward</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'b'</span></em><a class="headerlink" href="#mp1_classes.Moves.backward" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Moves.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'f'</span></em><a class="headerlink" href="#mp1_classes.Moves.forward" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Moves.leftward">
+<span class="sig-name descname"><span class="pre">leftward</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'l'</span></em><a class="headerlink" href="#mp1_classes.Moves.leftward" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.Moves.rightward">
+<span class="sig-name descname"><span class="pre">rightward</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'r'</span></em><a class="headerlink" href="#mp1_classes.Moves.rightward" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mp1_classes.SettingsDarkImages">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mp1_classes.</span></span><span class="sig-name descname"><span class="pre">SettingsDarkImages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tutorials_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaderboard_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control_keys_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credits_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sure_dark:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mp1_classes.html#SettingsDarkImages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.SettingsDarkImages" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The class Settings_Dark_Images is for assigning the object or picture 
+for the settings, tutorials, leaderboard, etc. into variables. 
+As seen in the code, pygame.image.load() is primarily used to 
+load the images and frames for the interfaces of the game. These 
+frames are stored in the images folder. When you just put the 
+filename as the argument, the game will not load and the terminal 
+will tell you that the images are not in the current directory or 
+folder. The variables are also named according to whether the frames 
+are for light or dark mode.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsDarkImages.control_keys_dark">
+<span class="sig-name descname"><span class="pre">control_keys_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsDarkImages.control_keys_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsDarkImages.credits_dark">
+<span class="sig-name descname"><span class="pre">credits_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsDarkImages.credits_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsDarkImages.leaderboard_dark">
+<span class="sig-name descname"><span class="pre">leaderboard_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsDarkImages.leaderboard_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsDarkImages.settings_dark">
+<span class="sig-name descname"><span class="pre">settings_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsDarkImages.settings_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsDarkImages.sure_dark">
+<span class="sig-name descname"><span class="pre">sure_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsDarkImages.sure_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsDarkImages.tutorials_dark">
+<span class="sig-name descname"><span class="pre">tutorials_dark</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsDarkImages.tutorials_dark" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mp1_classes.SettingsLightImages">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mp1_classes.</span></span><span class="sig-name descname"><span class="pre">SettingsLightImages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tutorials_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaderboard_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control_keys_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credits_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sure_light:</span> <span class="pre">~pygame.surface.Surface</span> <span class="pre">=</span> <span class="pre">&lt;Surface(960x768x32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_alpha=255)&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mp1_classes.html#SettingsLightImages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mp1_classes.SettingsLightImages" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The class Settings_Light_Images is for assigning the object or picture 
+for the settings, tutorials, leaderboard, etc. into variables. As seen in 
+the code, pygame.image.load() is primarily used to load the images and frames 
+for the interfaces of the game. These frames are stored in the images 
+folder. When you just put the filename as the argument, the 
+game will not load and the terminal will tell you that the 
+images are not in the current directory or folder. The variables 
+are also named according to whether the frames are for light or 
+dark mode.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsLightImages.control_keys_light">
+<span class="sig-name descname"><span class="pre">control_keys_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsLightImages.control_keys_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsLightImages.credits_light">
+<span class="sig-name descname"><span class="pre">credits_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsLightImages.credits_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsLightImages.leaderboard_light">
+<span class="sig-name descname"><span class="pre">leaderboard_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsLightImages.leaderboard_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsLightImages.settings_light">
+<span class="sig-name descname"><span class="pre">settings_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsLightImages.settings_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsLightImages.sure_light">
+<span class="sig-name descname"><span class="pre">sure_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsLightImages.sure_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mp1_classes.SettingsLightImages.tutorials_light">
+<span class="sig-name descname"><span class="pre">tutorials_light</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Surface</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Surface(960x768x32,</span> <span class="pre">global_alpha=255)&gt;</span></em><a class="headerlink" href="#mp1_classes.SettingsLightImages.tutorials_light" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mp1.html" class="btn btn-neutral float-left" title="mp1 module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="test.html" class="btn btn-neutral float-right" title="test module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, John Harry Arciga &amp; Jonathan David Pagaduan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

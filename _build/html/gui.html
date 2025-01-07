@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gui module &mdash; Egg Roll December 8, 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e0c65429"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mp1 module" href="mp1.html" />
+    <link rel="prev" title="game module" href="game.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Egg Roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mp1</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="game.html">game module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">gui module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gui.control_keys_or_credits"><code class="docutils literal notranslate"><span class="pre">control_keys_or_credits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.display_scores"><code class="docutils literal notranslate"><span class="pre">display_scores()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.exit_game"><code class="docutils literal notranslate"><span class="pre">exit_game()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.leaderboard"><code class="docutils literal notranslate"><span class="pre">leaderboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.levels"><code class="docutils literal notranslate"><span class="pre">levels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.loading"><code class="docutils literal notranslate"><span class="pre">loading()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.main_menu"><code class="docutils literal notranslate"><span class="pre">main_menu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.render_scr"><code class="docutils literal notranslate"><span class="pre">render_scr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.settings"><code class="docutils literal notranslate"><span class="pre">settings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mp1.html">mp1 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp1_classes.html">mp1_classes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="the_dev_notes.html">the_dev_notes module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Egg Roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mp1</a></li>
+      <li class="breadcrumb-item active">gui module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gui.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-gui">
+<span id="gui-module"></span><h1>gui module<a class="headerlink" href="#module-gui" title="Link to this heading"></a></h1>
+<p>The gui.py file contains the different functions that enable our 
+team to create the main menu interface. To give an overview on 
+how the whole file works, we used the pygame library to create 
+features such as button and loading images onto the screen. 
+The idea on how the file works is that the gui.py contains 
+functions that represent the ‘buttons’ and their functionalities 
+(‘Play’, ‘Settings’, ‘Exit Game’ and other buttons in the game). 
+It is like a ‘slideshow’ presentation wherein when you click a 
+button (like for example, ‘Play’), you will be ‘directed’ to 
+another frame or in Python sense, a new frame will be shown 
+through the screen.blit() function which is seen across the 
+document. Every function contains clickable buttons and event 
+handling methods which will be explained further below.</p>
+<p>The pygame library was imported as it is one of the libraries 
+in Python used to make games and its features. The sys module 
+was imported to let the program interact with the system such 
+as when the player wants to exit the game (removing the game 
+screen on the system). The game module was imported as this 
+represents game.py - the file used to load the game interface, 
+as well as implementation of game mechanics such as adding the 
+number of points, checking the remaining number of moves, and 
+others. In the gui.py file, the game module is mostly used to 
+call the function start_with_gui_level() in game.py, which 
+opens the files such as level1.in which are used to set-up 
+the game itself. The EventHandler class from the mp1_classes.py
+file was also used for handling interactions such as when ESC
+button is pressed or when the mouse is clicked.</p>
+<p>The block of code from mainClock to pygame.display.set_mode 
+is for the setting up of the game itself. The pygame.time.Clock() 
+creates a clock object to be used in functions where time delays 
+are needed. The from pygame.locals import * is for importing 
+constants from pygame library such as KEYDOWN and QUIT for 
+managing inputs like arrow keys and letter keys. 
+The pygame.display.set_caption(‘Egg Roll’) sets the name of the 
+game window to ‘Egg Roll’. The icon for the game is located on 
+the images folder, and the pygame.display.set_icon() function 
+displays the icon.png on the taskbar whenever the game is opened. 
+The pygame.display.set_mode() function makes the resolution of 
+the game to be set to 960 x 768. All the frames used for the 
+game were set to this resolution.</p>
+<p>Every function has pygame.mouse.get_pos() which is responsible 
+for finding the position of the mouse pointer on the game screen, 
+and this position are saved as position_x and position_y. Also, 
+every rectangular area is made by pygame.Rect() which has four 
+arguments: starting x position, starting y position, width, and 
+height. These rectangle areas are saved in variables such as 
+exit_game_button. There are also if statements with the function 
+.collidepoint() with position_x and position_y as its argument. 
+These statements check if the mouse pointer is within the 
+rectangular area of the button and if the area is clicked on 
+the mouse. Once clicked, a new frame will be shown on the screen 
+as other functions will be called such as settings(mode).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.control_keys_or_credits">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">control_keys_or_credits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'control_keys'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'credits'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'control_keys'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#control_keys_or_credits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.control_keys_or_credits" title="Link to this definition"></a></dt>
+<dd><p>The control_keys_or_credits function loads either the control keys 
+interface or the credits interface, depending if the function has 
+only 0-1 arguments or if the mode is set to “control_keys” or 
+“credits”. We combined the loading of credits and control keys 
+interface since they have the same interface with different contents. 
+The if statements handle whether the one being loaded on the screen 
+is the control keys or the credits interface and whether they will 
+be in light or dark mode. Same as the other functions, it also has 
+sections in the code that creates clickable buttons and event handling.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>mode (Literal[‘light’, ‘dark’]): This determines the theme of the screen.
+use (Literal[‘control_keys’, ‘credits’]): This indicates whether to show the 
+control keys or credits screen.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.display_scores">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">display_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">third_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#display_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.display_scores" title="Link to this definition"></a></dt>
+<dd><p>This function displays the Top 3 scores on the leaderboard interface
+through the font.render and screen.blit. The True in the .render() is
+for anti-aliasing and the (121,78,7) is for the font color.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>first_score (int): The highest score.
+second_score (int): The second highest score.
+third_score (int): The third highest score.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.exit_game">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">exit_game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#exit_game"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.exit_game" title="Link to this definition"></a></dt>
+<dd><p>The exit_game function loads the confirmation screen if the 
+player clicked the Exit Game button at the main menu interface. 
+It accepts one argument: mode which has the default value “light”, 
+meaning that if the exit_game is called under the main_menu 
+function with 0-1 argument, provided that when 1 argument is 
+used (“light”), it will show the light mode of the confirmation 
+screen. When the Yes button is clicked, it will exit the game, 
+and clicking the No button will call the main_menu() function 
+with the argument mode that depends on the mode passed onto the 
+exit_game function. Same as the other functions, it also has 
+sections in the code that creates clickable buttons and event 
+handling.</p>
+<p>The main_menu() is at the last part of the gui.py code which 
+is important since when python3 gui.py is called, it will show 
+the main menu interface. If this is removed, the main menu will 
+not show up.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>mode (Literal[‘light’, ‘dark’]): This determines the theme of the screen.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.leaderboard">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">leaderboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#leaderboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.leaderboard" title="Link to this definition"></a></dt>
+<dd><p>This function displays the leaderboard interface. It contains buttons
+for Levels 1-5, as well as the Settings screen which directs you back
+to the settings interface. It calls the get_leaderboard_scores 
+function when Levels 1-5 are clicked.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>mode (Literal[‘light’, ‘dark’]): This determines the theme of the screen.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.levels">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tutorial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'yes'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'no'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'no'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.levels" title="Link to this definition"></a></dt>
+<dd><p>The levels() function is responsible for displaying the level 
+selector interface for the main levels and tutorial levels, 
+depending on the mode (light or dark) and if the function is 
+called with yes or no as the tutorial. The function has two 
+default values, mode = “light” and tutorials = “no”, meaning 
+that it loads the main level selector in the light mode as 
+default. This function is called mainly in the main_menu function 
+wherein when the player clicks the Play button, the said function 
+will call the levels function.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>mode (Literal[‘light’, ‘dark’]): This determines the theme of the screen.
+tutorial (Literal[‘yes’, ‘no’]): This indicates if tutorial mode is on or not.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.loading">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">loading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tutorial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'yes'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'no'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'no'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#loading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.loading" title="Link to this definition"></a></dt>
+<dd><p>This function handles the loading screen logic. If the file number is 
+within 1-5, it will call the render_screen function. However, it will
+tell the user that the file number is not in range 1-5 if otherwise.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>file (int): The level or tutorial number (1-5).
+mode (Literal[‘light’, ‘dark’]): This determines the theme of the screen.
+tutorial (Literal[‘yes’, ‘no’]): This indicates if tutorial mode is on or not.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.main_menu">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">main_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#main_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.main_menu" title="Link to this definition"></a></dt>
+<dd><p>The main_menu function is responsible for showing the main menu 
+interface. It accepts a single argument: mode which as a default 
+value “light” meaning that the game will load the light mode of 
+the main menu interface by default, and when it is called again 
+in other functions with mode = “dark”, it will show the dark mode. 
+The screen will then be updated by the .display.update() function 
+and the .tick() function is responsible for the frame per second 
+to be passed when updating the screen.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>mode: Literal[‘light’, ‘dark’] = ‘light’: The mode for the
+screen to be flashed on screen; light is the default</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.render_scr">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">render_scr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tutorial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'yes'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'no'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#render_scr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.render_scr" title="Link to this definition"></a></dt>
+<dd><p>This function creates dictionaries for the level_files, tutorial_files,
+light_screens, and dark_screens. The function loads the screen depending
+on the specific file level as represented by file and if the tutorial
+level is on or not.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>file (int): This is the level or tutorial number (1-5).
+mode (Literal[‘light’, ‘dark’]): This determines the theme of the screen.
+tutorial (Literal[‘yes’, ‘no’]): This indicates if tutorial mode is on or not.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.settings">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'light'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gui.html#settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gui.settings" title="Link to this definition"></a></dt>
+<dd><p>The settings function loads the settings interface. When called, 
+it has the default value mode = “light”, meaning that the default 
+settings interface is in light mode. It also has sections in the 
+code that creates clickable buttons and event handling.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>mode (Literal[‘light’, ‘dark’]): This determines the theme of the screen.
+The default is light mode.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="game.html" class="btn btn-neutral float-left" title="game module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mp1.html" class="btn btn-neutral float-right" title="mp1 module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, John Harry Arciga &amp; Jonathan David Pagaduan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

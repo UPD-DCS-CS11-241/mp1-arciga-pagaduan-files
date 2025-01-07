@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>game module &mdash; Egg Roll December 8, 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e0c65429"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="gui module" href="gui.html" />
+    <link rel="prev" title="mp1" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Egg Roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mp1</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">game module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#game.apply_move"><code class="docutils literal notranslate"><span class="pre">apply_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.change_leaderboard"><code class="docutils literal notranslate"><span class="pre">change_leaderboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.check_if_win_or_lose"><code class="docutils literal notranslate"><span class="pre">check_if_win_or_lose()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.display_grid"><code class="docutils literal notranslate"><span class="pre">display_grid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.get_leaderboard_scores"><code class="docutils literal notranslate"><span class="pre">get_leaderboard_scores()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.is_game_over"><code class="docutils literal notranslate"><span class="pre">is_game_over()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.load_assets"><code class="docutils literal notranslate"><span class="pre">load_assets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.load_level"><code class="docutils literal notranslate"><span class="pre">load_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.process_game_events"><code class="docutils literal notranslate"><span class="pre">process_game_events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.process_lines"><code class="docutils literal notranslate"><span class="pre">process_lines()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.shift_eggs"><code class="docutils literal notranslate"><span class="pre">shift_eggs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.start_gui_with_level"><code class="docutils literal notranslate"><span class="pre">start_gui_with_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game.tilt_grid"><code class="docutils literal notranslate"><span class="pre">tilt_grid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gui.html">gui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp1.html">mp1 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp1_classes.html">mp1_classes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="the_dev_notes.html">the_dev_notes module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">test module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Egg Roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mp1</a></li>
+      <li class="breadcrumb-item active">game module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/game.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-game">
+<span id="game-module"></span><h1>game module<a class="headerlink" href="#module-game" title="Link to this heading"></a></h1>
+<p>The game.py file contains the different functions that enable 
+our team to create the game interface. To give an overview on 
+how the whole file works, we used the pygame library to create 
+features such as button and loading images onto the screen. 
+The game.py shows the different assets or the icons used to load 
+the nests, eggs, etc. on the game screen through calling screen.blit() 
+across the document. It also contains the logic behind how the points 
+are calculated and to determine if the game is over or not.</p>
+<p>The code block from “from typing” to “from mp1_classes” imports 
+pygame as it is the library used for loading screen frames, 
+sys for system commands such as quitting the game, and KEYDOWN, 
+K_UP, and others as they will be used in the start_with_gui_level() 
+function to detect if the keys clicked on the keyboard are the letter 
+keys or the arrow keys for the game to progress. It also contains the 
+global variables for the screen width, screen height, and frame per 
+second which are the basis to the screen resolution of the game. 
+We used 960 x 768 pixels as it is not large (or wide enough) but 
+it is also not small. We also used 60 frames per second as it is 
+one of the most common FPS in games.</p>
+<p>The typing module is used for the mypy –strict and pyright checking.
+The mp1_classes module is used for handling events such as when the
+DELETE key is pressed to restart the level.</p>
+<p>The block of code that consists of game_light up to lose_dark variables 
+assigns the pictures on the images folder loaded via pygame.image.load() 
+into variables. This is important as it will be used in the 
+start_gui_with_level() function on loading the game interface screen and 
+the frames that show you if you win or lose the game.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="game.apply_move">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">apply_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">move</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#apply_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.apply_move" title="Link to this definition"></a></dt>
+<dd><p>This function applies a move to the grid and updates the points. The apply_move 
+function has three arguments: grid which is the list of rows of emojis loaded by 
+the load_level function, move which is the character in ‘lfrb’, and points which 
+is the points accumulated by the player. Through if statements, the function checks 
+the appropriate action to do depending on the move. If move == ‘l’, it will call 
+tilt_grid with dy = -1. The dy and dx will change depending on the value of move. 
+The function will return an updated grid which is a list of rows of emojis and 
+the updated points.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>grid (List[List[str]]): The current game grid.
+move (str): The move direction (‘l’, ‘r’, ‘f’, ‘b’).
+points (int): The current score.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[List[List[str]], int, bool]:</dt><dd><ul class="simple">
+<li><p>The updated grid.</p></li>
+<li><p>The updated score.</p></li>
+<li><p>Whether the move was valid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.change_leaderboard">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">change_leaderboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/game.html#change_leaderboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.change_leaderboard" title="Link to this definition"></a></dt>
+<dd><p>This function updates the leaderboard with a new score. It will be 
+called by the ‘main’ function once the game round is finished. It will
+call the ‘get_leaderboard’ function to retrieve the Top 3 scores for 
+the level. These scores will then be stored in a list where they will be
+sorted, and the (new) Top 3 scores will be extracted and written in the
+leaderboard file.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): The stage file name
+new_score (int): The new score to be added on the leaderboard</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.check_if_win_or_lose">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">check_if_win_or_lose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/game.html#check_if_win_or_lose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.check_if_win_or_lose" title="Link to this definition"></a></dt>
+<dd><p>The check_if_win_or_lose function checks if at the end of the 
+movement (or gaming session), the player loses or wins by checking 
+the sum of the count of empty nests per row which is saved in the 
+empty nests variable. If empty_nests == 0, the function returns 
+True, signifying that the player wins the game, and False if 
+otherwise, signifying that the player loses the game.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>grid (List[List[str]]): The current game grid.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True if the player won, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.display_grid">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">display_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Surface</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/game.html#display_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.display_grid" title="Link to this definition"></a></dt>
+<dd><p>The display_grid function is responsible for displaying the grid of 
+the ones in the .in files and the grids on the .in files will then 
+be represented by every value in the dictionary assets through series 
+of if statements. It accepts three arguments: screen which pertains 
+to the game screen with width and height which will be defined on the 
+start_with_gui_level function, the grid which will be also defined in 
+the said function as it will be saved by calling the load_level function, 
+and the assets which will be defined as the start_with_gui_level calls 
+display_grid. The nested for loops iterate each row first through the 
+for row_idx… and column through for col_idx…. The x and y are the 
+basis for the starting position where the assets or icons will be placed. 
+The multiplier here is 27 since through trial and error, we observed that 
+the width and height of every cell or icon must be 1/3 of the dimension 
+of the scaled assets or icons in the display_grid function (81 x 81). 
+The nested loops are responsible for iterating every row and every column 
+of the grid, filling the cells or the square areas with the icons in the 
+assets (substituting eggs emoji with the image of an egg for example).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>screen (pygame.Surface): The game screen surface.
+grid (List[List[str]]): The game grid.
+assets (Dict[str, pygame.Surface]): Dictionary of game assets.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.get_leaderboard_scores">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">get_leaderboard_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#get_leaderboard_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.get_leaderboard_scores" title="Link to this definition"></a></dt>
+<dd><p>This function reads the leaderboard file (hs_gui_level#.in) 
+related to the file opened in the terminal. It saves the Top 3 
+scores from the file into variables first, second, and third, and returns them.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): The name of the leaderboard file.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[int, int, int]:</dt><dd><ul class="simple">
+<li><p>First place score.</p></li>
+<li><p>Second place score.</p></li>
+<li><p>Third place score.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.is_game_over">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">is_game_over</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/game.html#is_game_over"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.is_game_over" title="Link to this definition"></a></dt>
+<dd><p>The is_game_over function checks if the game is over by checking 
+whether the empty_nests == 0, eggs == 0, or num_moves == 0 through 
+the function .count(). In the empty_nests, the count of empty nests 
+will be checked for every row, and their sum will be added. 
+Same goes for the eggs where the count of the eggs will be checked 
+in every row. The function returns True if either the empty nests, 
+eggs, or number of moves count is 0 and False if otherwise.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>grid (List[List[str]]): The current game grid.
+num_moves (int): The remaining number of moves.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True if the game is over, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.load_assets">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">load_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Surface</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#load_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.load_assets" title="Link to this definition"></a></dt>
+<dd><p>The load_assets function is responsible for loading the icons 
+in the game such as the eggs, grass, walls, frying pans, and nests. 
+It has a dictionary assets that has strings of the description of 
+the icons as the keys and the object being loaded via 
+pygame.image.load() as the values. These objects or images 
+will be scaled down to 81 by 81 pixels via the pygame.transform.scale, 
+and the function will return a dictionary of these scaled images.</p>
+<dl class="simple">
+<dt>Args: </dt><dd><p>None as it is a callable function for loading game assets.</p>
+</dd>
+<dt>Returns:</dt><dd><p>assets (Dict[str,pygame.Surface]): A dictionary containing scaled image assets.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.load_level">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">load_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#load_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.load_level" title="Link to this definition"></a></dt>
+<dd><p>The load_level function is responsible for loading the files in 
+.in format. It accepts filename path as the argument. The function 
+then opens the file in UTF-8 format using with open… as file. 
+The first line of the file is saved as num_rows, the second line 
+as num_moves, and the next remaining lines are saved as a list of 
+lines in the variable grid. The function returns the grid as a 
+list of lines of emojis, num_moves representing the number of moves 
+available, and 0 since it will be saved as the initial point or score 
+in the start_gui_with_level function.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): The name of the level file.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[List[List[str]], int, int]:</dt><dd><ul class="simple">
+<li><p>The game grid.</p></li>
+<li><p>The number of moves allowed.</p></li>
+<li><p>The initial score (0).</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.process_game_events">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">process_game_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prev_moves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#process_game_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.process_game_events" title="Link to this definition"></a></dt>
+<dd><p>This function creates a dictionary that maps every key on the
+keyboard to a specific letter in ‘fblr’. It process game events 
+like key presses and update the game state through the apply_move 
+function, returning the updated grid, number of moves, points, and
+list of previous moves.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>grid (List[List[str]]): The current game grid.
+num_moves (int): The remaining number of moves.
+points (int): The current score.
+prev_moves (List[str]): The list of previous moves.
+filename (str): The name of the level file.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Tuple[List[List[str]], int, int, List[str]]: Updated game 
+state (grid, moves, score, and previous moves).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.process_lines">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">process_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#process_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.process_lines" title="Link to this definition"></a></dt>
+<dd><p>This function processes multiple lines (rows or columns) for egg 
+movement by calling the shift_eggs function and getting the
+updated lines (if the eggs have shifted). It will return the updated
+lines, the updated points, and if the eggs moved or not.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>lines (List[str]): A list of strings representing rows or columns of the grid.
+points (int): The current score.
+direction (str): The direction of movement (‘left’ or ‘right’).</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[List[str], int, bool]: </dt><dd><ul class="simple">
+<li><p>List[str]: The updated lines after processing movement.</p></li>
+<li><p>int: The updated score.</p></li>
+<li><p>bool: Whether any movement occurred.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.shift_eggs">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">shift_eggs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#shift_eggs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.shift_eggs" title="Link to this definition"></a></dt>
+<dd><p>This function is responsible for shifting the eggs to the left, 
+right, up, or down depending on the argument direction. It has 
+three arguments: line which is either a row or a column, points 
+which is the initial points, and direction. It has variables for 
+every emoji of grass, eggs, etc, and a variable moved = False 
+which will be changed if the eggs in the line shifted, determining 
+the moved_any on the tilt_grid function. The code block contains 
+if statements depending on the direction, and it usually checks 
+if the pan is on the direction of the egg (which changes 
+the egg tile into grass tile), or if the nest that is empty is 
+on the direction of the egg (which changes the nest into a full 
+nest), or if the grass is next to the egg (which changes the egg 
+tile into grass tile and vice versa). The function returns a 
+joined line_list, wherein the initial line_list is the value 
+of line and the updated line_listis the one changed through 
+index checking and changing of values on the list. It also 
+returns moved if the eggs shifted and points if the player 
+accumulated points for moving.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>line (str): A string representing a single row or column of the grid.
+points (int): The current score.
+direction (str): The direction of movement (‘left’ or ‘right’).</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[str, bool, int]: </dt><dd><ul class="simple">
+<li><p>str: The updated line after movement.</p></li>
+<li><p>bool: Whether any movement occurred in the line.</p></li>
+<li><p>int: The updated score.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.start_gui_with_level">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">start_gui_with_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'light'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tutorial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/game.html#start_gui_with_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.start_gui_with_level" title="Link to this definition"></a></dt>
+<dd><p>The start_gui_with_level function is responsible for doing everything 
+that involves the .in files: from loading the files, applying the moves, 
+checking if the game is over, and others by calling several functions 
+throughout the game.py file. It starts by initializing the pygame through 
+pygame.init(), the screen with width and height, the caption for the 
+game window, and the clock for the time within the game (for the frame 
+per second). The function accepts two arguments: the filename which is 
+a path of the file and the mode (the default is “light”, and calling 
+the function with one argument means that the function will load the 
+game screen in light mode). The load_assets will then be called so that 
+there will be scaled icons saved in assets variable. The file is then 
+loaded by calling the load_level function, extracting the grid, 
+number of moves, and initial points. It has a while loop which 
+checks for every event or action that the player does on the keyboard 
+or the game window. Every key is checked in the process_game_events
+function. The if statements with the KEYDOWN and other 
+conditions with K is for checking every event or action on the keyboard. 
+If the X on the game window is pressed, the game window disappears. 
+Pressing the UP arrow key or F calls the function apply_move with ‘f’ 
+as its direction, pressing the DOWNarrow key or B calls the function 
+apply_move with ‘b’ as its direction, pressing the LEFT arrow key or 
+L calls the function apply_move with ‘l’ as its direction, and pressing 
+the RIGHT arrow key or R calls the function apply_move with ‘r’ as its 
+direction. The movement done is then appended on the prev_moves. 
+The screen is shown through the screen.blit(…) call, which shows the 
+light mode of the game interface if the mode = “light” and dark mode if 
+mode = “dark”. The function display_grid is called to display the 
+contents of the file, substituting every emojis into their corresponding 
+icons in the assets. The previous moves, number of moves available, 
+and points are displayed through the code below. Note that the 
+previous moves will only be shown the prev_moves is not an empty list.</p>
+<p>There are two helper functions inside this function: the draw_game_texts
+and the handle_game_end. The draw_game_texts handles the drawing of the
+game texts such as the previous moves, points, and number of moves
+remaining. The handle_game_end function is responsible for checking if
+the game has already ended, and what to do when such thing happens.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): The name of the level file.
+mode (str, optional): Display mode (‘light’ or ‘dark’). Defaults to “light”.
+tutorial (bool, optional): Whether the game is in tutorial mode. Defaults to False.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game.tilt_grid">
+<span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">tilt_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/game.html#tilt_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#game.tilt_grid" title="Link to this definition"></a></dt>
+<dd><p>This function handles the tilting of the grid in a specific direction. It uses a 
+while loop that runs as long as movements are possible, determined by the <cite>moved</cite> 
+variavle. Depending on <cite>dx</cite> and <cite>dy</cite>, the function processes rows 
+(horizontal movement or dx = 0) or columns (vertical movement or dx != 0) 
+by combining them into strings and passing them to the process_lines function.</p>
+<p>The grid is updated based on the processed lines, either by replacing rows for 
+horizontal movement or updating columns for vertical movement. 
+If any movement occurs, the grid will be displayed through 
+the display_grid function. If there are no further movements are possible, 
+the function returns the updated grid and score.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>grid (List[List[str]]): The current game grid.
+points (int): The current score.
+dx (int): Row direction (-1 for up, 1 for down, 0 for no change).
+dy (int): Column direction (-1 for left, 1 for right, 0 for no change).</p>
+</dd>
+<dt>Returns:</dt><dd><p>Tuple[List[List[str]], int]: The updated grid and points.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="mp1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gui.html" class="btn btn-neutral float-right" title="gui module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, John Harry Arciga &amp; Jonathan David Pagaduan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
