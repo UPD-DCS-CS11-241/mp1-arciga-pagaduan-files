@@ -419,5 +419,6 @@ def change_leaderboard(filename: str, new_score: int) -> None:
         print(f"The score values are None: {e}")
 
 
-if __name__ == "__main__":
-    main()
+# The following below is added for the Sphinx documentation generation:
+# if __name__ == "__main__":
+#    main()
