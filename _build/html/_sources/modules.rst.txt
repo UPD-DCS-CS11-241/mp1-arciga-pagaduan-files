@@ -1,0 +1,12 @@
+mp1
+===
+
+.. toctree::
+   :maxdepth: 7
+
+   game
+   gui
+   mp1
+   mp1_classes
+   test
+   the_dev_notes

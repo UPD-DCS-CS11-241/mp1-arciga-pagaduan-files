@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mp1 &mdash; Egg Roll December 8, 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=e0c65429"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Egg Roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">mp1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">test module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Egg Roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mp1</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mp1</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The mp1.py file is the terminal version of the Egg Roll game </span>
+<span class="sd">- meaning that when it is run, it has no interface other than </span>
+<span class="sd">the one shown in the WSL terminal. It can be run to load a game </span>
+<span class="sd">level using python3 mp1.py level1.in (if you want to load level1.in).</span>
+
+<span class="sd">The modules os, subprocess, and sys are imported for the </span>
+<span class="sd">clear_screen function which is responsible for clearing </span>
+<span class="sd">the screen after every movement of the egg, time for the </span>
+<span class="sd">delay of every snapshot of the movement of the eggs, and </span>
+<span class="sd">the one with the argparse is to help in accepting two </span>
+<span class="sd">arguments for python3 in the command-line interface as </span>
+<span class="sd">you open the game. The Moves and Board classes are imported</span>
+<span class="sd">from the mp1_classes to import the classes representing</span>
+<span class="sd">the different emojis and moves in the game. The Union, List,</span>
+<span class="sd">and Tuple are imported from the typing module for the</span>
+<span class="sd">type-checking.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgumentParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mp1_classes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Moves</span><span class="p">,</span> <span class="n">Board</span>
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../mp1.html#mp1.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function handles the interaction with the player by loading the game level, </span>
+<span class="sd">    managing the moves, displaying the grid, and updating the leaderboard.</span>
+<span class="sd">    The one with the ArgumentParser() up to .parse.args() is the one responsible </span>
+<span class="sd">    for adding a new argument to python3 mp1.py &lt;filename&gt; so that when mp1.py is run, </span>
+<span class="sd">    the filename with it will appear through series of function in mp1.py.</span>
+<span class="sd">    The game will then load the level using the load_level function. </span>
+<span class="sd">    The previous moves that are typed will be appended on prev_moves. </span>
+<span class="sd">    With the while loop inside this function, the function will run as long as the </span>
+<span class="sd">    number of moves is greater than 0 and if there are any eggs or empty nests on </span>
+<span class="sd">    every row in the grid. It will then clear the screen, display the grid through </span>
+<span class="sd">    display_grid function, and print the previous moves, remaining moves, and points </span>
+<span class="sd">    of the player. The program will accept moves which will then be passed on the </span>
+<span class="sd">    separate_moves function and for every move in valid_moves, the function will call </span>
+<span class="sd">    the apply_move function. At the end of the round, the previous moves, remaining </span>
+<span class="sd">    moves, and score accumulated by the player will be flashed on the screen.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;stage_file&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">load_level</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">stage_file</span><span class="p">)</span>
+    <span class="n">prev_moves</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="n">num_moves</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="s1">&#39;🥚&#39;</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="s1">&#39;🪹&#39;</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">)):</span>
+        <span class="n">clear_screen</span><span class="p">()</span>
+        <span class="n">display_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;===============</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;To see the Top 3 scores for this grid, you may click the &#39;H&#39; key on your keyboard.&quot;</span>
+            <span class="s2">&quot;Note that the high scores will not be shown if the input is &#39;RHL&#39;, &#39;LH&#39;, or &quot;</span>
+            <span class="s2">&quot;any variants where &#39;H&#39; is together with other symbols in the input.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;===============&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Previous moves: </span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prev_moves</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remaining moves: </span><span class="si">{</span><span class="n">num_moves</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Points: </span><span class="si">{</span><span class="n">points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">directions</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter move/s: &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">directions</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">):</span>
+            <span class="n">first_score</span><span class="p">,</span> <span class="n">second_score</span><span class="p">,</span> <span class="n">third_score</span> <span class="o">=</span> <span class="n">get_leaderboard</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">stage_file</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;===============</span><span class="se">\n</span><span class="s2">Leaderboard for this level:</span><span class="se">\n</span>
+<span class="s2">    1st: </span><span class="si">{</span><span class="n">first_score</span><span class="si">}</span>
+<span class="s2">    2nd: </span><span class="si">{</span><span class="n">second_score</span><span class="si">}</span>
+<span class="s2">    3rd: </span><span class="si">{</span><span class="n">third_score</span><span class="si">}</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press any key to return to the game.&quot;</span><span class="p">)</span>
+
+        <span class="n">valid_moves</span> <span class="o">=</span> <span class="n">separate_moves</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">move</span> <span class="ow">in</span> <span class="n">valid_moves</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">num_moves</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">apply_move</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">move</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span>
+            <span class="n">move_conversion</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="s2">&quot;↑&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="s2">&quot;↓&quot;</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="s2">&quot;←&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="s2">&quot;→&quot;</span><span class="p">}</span>
+            <span class="n">prev_moves</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">move_conversion</span><span class="p">[</span><span class="n">move</span><span class="p">])</span>
+            <span class="n">num_moves</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="n">clear_screen</span><span class="p">()</span>
+    <span class="n">display_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Previous moves: </span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prev_moves</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remaining moves: </span><span class="si">{</span><span class="n">num_moves</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s1">&#39;🪹&#39;</span> <span class="ow">in</span> <span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Points: </span><span class="si">{</span><span class="n">points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">points</span> <span class="o">+</span> <span class="p">(</span><span class="n">num_moves</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Points: </span><span class="si">{</span><span class="n">points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">change_leaderboard</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">stage_file</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_level">
+<a class="viewcode-back" href="../mp1.html#mp1.load_level">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_level</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function reads the information located in the .in file as represented</span>
+<span class="sd">    by the argument (filename) which is a path. The first line in the file will</span>
+<span class="sd">    be saved as num_rows, the second line as num_moves, and the remaining lines</span>
+<span class="sd">    will be saved as grid. The function will return a grid, containing list of</span>
+<span class="sd">    rows of emojis, number of moves available, and 0 as the initial point or score.</span>
+
+<span class="sd">    Args: </span>
+<span class="sd">        filename (str): The name of the file containing the level data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[List[str]], int, int]: A tuple containing the grid, </span>
+<span class="sd">        number of moves, and initial points.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">num_moves</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="display_grid">
+<a class="viewcode-back" href="../mp1.html#mp1.display_grid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">display_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function displays the game grid on the terminal.</span>
+<span class="sd">    It accepts one argument which is a grid or a list of </span>
+<span class="sd">    rows of emojis. The function prints every list of rows </span>
+<span class="sd">    of emojis and joins them into one row using for loop.</span>
+
+<span class="sd">    Args: </span>
+<span class="sd">        grid List[List[str]]: The current game grid.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="clear_screen">
+<a class="viewcode-back" href="../mp1.html#mp1.clear_screen">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clear_screen</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function clears the terminal screen whenever it is called.</span>
+<span class="sd">    This is usually called in the main function wherein every snapshot </span>
+<span class="sd">    of the movement is displayed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">isatty</span><span class="p">():</span>
+        <span class="n">clear_cmd</span> <span class="o">=</span> <span class="s1">&#39;cls&#39;</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span> <span class="k">else</span> <span class="s1">&#39;clear&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">clear_cmd</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to clear the screen: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="separate_moves">
+<a class="viewcode-back" href="../mp1.html#mp1.separate_moves">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">separate_moves</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function accepts valid moves in &#39;lrfb&#39; and discards irrelevant inputs.</span>
+<span class="sd">    The input is provided by the player when the &quot;Enter move/s:&quot; is shown on the terminal. </span>
+<span class="sd">    The function checks through isinstance() if the args is a string. </span>
+<span class="sd">    If it is a string, it will return a list of characters or letters if the letters are in &#39;lfrb&#39;, </span>
+<span class="sd">    and an empty list if otherwise.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        args (Union[str, None]): A string containing potential moves or None (represented by spaces)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns: </span>
+<span class="sd">        List[str]: A list of valid moves (&#39;lrfb&#39;) in lowercase.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">move</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">move</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="n">move</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="s1">&#39;lrfb&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="get_leaderboard">
+<a class="viewcode-back" href="../mp1.html#mp1.get_leaderboard">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_leaderboard</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function reads the leaderboard file (hs_mp1_level#.in) </span>
+<span class="sd">    related to the file opened in the terminal. It saves the Top 3 </span>
+<span class="sd">    scores from the file into variables first, second, and third, and returns them.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The level file name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[int, int, int]: The top three scores, defaulting to 0 if not found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">leaderboard_file</span> <span class="o">=</span> <span class="s1">&#39;hs_mp1_&#39;</span> <span class="o">+</span> <span class="n">filename</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">leaderboard_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">second</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">third</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span> <span class="n">third</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="apply_move">
+<a class="viewcode-back" href="../mp1.html#mp1.apply_move">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_move</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function applies a move to the grid and updates the points. The apply_move </span>
+<span class="sd">    function has three arguments: grid which is the list of rows of emojis loaded by </span>
+<span class="sd">    the load_level function, move which is the character in &#39;lfrb&#39;, and points which </span>
+<span class="sd">    is the points accumulated by the player. Through if statements, the function checks </span>
+<span class="sd">    the appropriate action to do depending on the move. If move == &#39;l&#39;, it will call </span>
+<span class="sd">    tilt_grid with dy = -1. The dy and dx will change depending on the value of move. </span>
+<span class="sd">    The function will return an updated grid which is a list of rows of emojis and </span>
+<span class="sd">    the updated points.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid (List[List[str]]): The current game grid.</span>
+<span class="sd">        move (str): The move to apply (&#39;l&#39;, &#39;r&#39;, &#39;f&#39;, &#39;b&#39;).</span>
+<span class="sd">        points (int): The current score.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[List[str]], int]: The updated grid and points.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">match</span> <span class="n">move</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">Moves</span><span class="o">.</span><span class="n">leftward</span><span class="p">:</span>
+            <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">Moves</span><span class="o">.</span><span class="n">rightward</span><span class="p">:</span>
+            <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">Moves</span><span class="o">.</span><span class="n">forward</span><span class="p">:</span>
+            <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">Moves</span><span class="o">.</span><span class="n">backward</span><span class="p">:</span>
+            <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">points</span></div>
+
+
+
+<div class="viewcode-block" id="tilt_grid">
+<a class="viewcode-back" href="../mp1.html#mp1.tilt_grid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function handles the tilting of the grid in a specific direction. It uses a </span>
+<span class="sd">    while loop that runs as long as movements are possible, determined by the `moved` </span>
+<span class="sd">    variavle. Depending on `dx` and `dy`, the function processes rows </span>
+<span class="sd">    (horizontal movement or dx = 0) or columns (vertical movement or dx != 0) </span>
+<span class="sd">    by combining them into strings and passing them to the process_lines function.</span>
+
+<span class="sd">    The grid is updated based on the processed lines, either by replacing rows for </span>
+<span class="sd">    horizontal movement or updating columns for vertical movement. </span>
+<span class="sd">    If any movement occurs, the grid will be displayed through </span>
+<span class="sd">    the display_grid function. If there are no further movements are possible, </span>
+<span class="sd">    the function returns the updated grid and score.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid (List[List[str]]): The current game grid.</span>
+<span class="sd">        points (int): The current score.</span>
+<span class="sd">        dx (int): Row direction (-1 for up, 1 for down, 0 for no change).</span>
+<span class="sd">        dy (int): Column direction (-1 for left, 1 for right, 0 for no change).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[List[str]], int]: The updated grid and points.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">while</span> <span class="n">moved</span><span class="p">:</span>
+        <span class="n">moved</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span> <span class="k">if</span> <span class="n">dx</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span>
+            <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cols</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span> <span class="k">if</span> <span class="p">(</span><span class="n">dx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">dy</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;right&#39;</span>
+        <span class="n">updated_lines</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">moved</span> <span class="o">=</span> <span class="n">process_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">updated_lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">dx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">grid</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">):</span>
+                    <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">moved</span><span class="p">:</span>
+            <span class="n">clear_screen</span><span class="p">()</span>
+            <span class="n">display_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">points</span></div>
+
+
+
+<div class="viewcode-block" id="process_lines">
+<a class="viewcode-back" href="../mp1.html#mp1.process_lines">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function processes multiple lines (rows or columns) for egg </span>
+<span class="sd">    movement by calling the shift_eggs function and getting the</span>
+<span class="sd">    updated lines (if the eggs have shifted). It will return the updated</span>
+<span class="sd">    lines, the updated points, and if the eggs moved or not.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lines (List[str]): A list of strings representing rows or columns of the grid.</span>
+<span class="sd">        points (int): The current score.</span>
+<span class="sd">        direction (str): The direction of movement (&#39;left&#39; or &#39;right&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[str], int, bool]: </span>
+<span class="sd">            - List[str]: The updated lines after processing movement.</span>
+<span class="sd">            - int: The updated score.</span>
+<span class="sd">            - bool: Whether any movement occurred.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">moved</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">updated_lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">shifted_line</span><span class="p">,</span> <span class="n">line_moved</span><span class="p">,</span> <span class="n">updated_points</span> <span class="o">=</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
+        <span class="n">updated_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shifted_line</span><span class="p">)</span>
+        <span class="n">moved</span> <span class="o">=</span> <span class="n">moved</span> <span class="ow">or</span> <span class="n">line_moved</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">updated_points</span>
+    <span class="k">return</span> <span class="n">updated_lines</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">moved</span></div>
+
+
+
+
+<div class="viewcode-block" id="shift_eggs">
+<a class="viewcode-back" href="../mp1.html#mp1.shift_eggs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">shift_eggs</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is responsible for shifting the eggs to the left, </span>
+<span class="sd">    right, up, or down depending on the argument direction. It has </span>
+<span class="sd">    three arguments: line which is either a row or a column, points </span>
+<span class="sd">    which is the initial points, and direction. It has variables for </span>
+<span class="sd">    every emoji of grass, eggs, etc, and a variable moved = False </span>
+<span class="sd">    which will be changed if the eggs in the line shifted, determining </span>
+<span class="sd">    the moved_any on the tilt_grid function. The code block contains </span>
+<span class="sd">    if statements depending on the direction, and it usually checks </span>
+<span class="sd">    if the pan is on the direction of the egg (which changes </span>
+<span class="sd">    the egg tile into grass tile), or if the nest that is empty is </span>
+<span class="sd">    on the direction of the egg (which changes the nest into a full </span>
+<span class="sd">    nest), or if the grass is next to the egg (which changes the egg </span>
+<span class="sd">    tile into grass tile and vice versa). The function returns a </span>
+<span class="sd">    joined line_list, wherein the initial line_list is the value </span>
+<span class="sd">    of line and the updated line_listis the one changed through </span>
+<span class="sd">    index checking and changing of values on the list. It also </span>
+<span class="sd">    returns moved if the eggs shifted and points if the player </span>
+<span class="sd">    accumulated points for moving.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        line (str): A string representing a single row or column of the grid.</span>
+<span class="sd">        points (int): The current score.</span>
+<span class="sd">        direction (str): The direction of movement (&#39;left&#39; or &#39;right&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, bool, int]: </span>
+<span class="sd">            - str: The updated line after movement.</span>
+<span class="sd">            - bool: Whether any movement occurred in the line.</span>
+<span class="sd">            - int: The updated score.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">line_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">moved</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">match</span> <span class="n">direction</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_list</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;🥚&#39;</span><span class="p">:</span>
+                    <span class="k">match</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">pan</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">-=</span> <span class="mi">5</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">empty_nest</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">full_nest</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">+=</span> <span class="mi">10</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">case</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;🥚&#39;</span><span class="p">:</span>
+                    <span class="k">match</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">pan</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">-=</span> <span class="mi">5</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">empty_nest</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">full_nest</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">+=</span> <span class="mi">10</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line_list</span><span class="p">),</span> <span class="n">moved</span><span class="p">,</span> <span class="n">points</span></div>
+
+
+
+<div class="viewcode-block" id="change_leaderboard">
+<a class="viewcode-back" href="../mp1.html#mp1.change_leaderboard">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">change_leaderboard</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_score</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function updates the leaderboard with a new score. It will be </span>
+<span class="sd">    called by the &#39;main&#39; function once the game round is finished. It will</span>
+<span class="sd">    call the &#39;get_leaderboard&#39; function to retrieve the Top 3 scores for </span>
+<span class="sd">    the level. These scores will then be stored in a list where they will be</span>
+<span class="sd">    sorted, and the (new) Top 3 scores will be extracted and written in the</span>
+<span class="sd">    leaderboard file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The stage file name</span>
+<span class="sd">        new_score (int): The new score to be added on the leaderboard</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">first_score</span><span class="p">,</span> <span class="n">second_score</span><span class="p">,</span> <span class="n">third_score</span> <span class="o">=</span> <span class="n">get_leaderboard</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_score</span><span class="p">,</span> <span class="n">second_score</span><span class="p">,</span> <span class="n">third_score</span><span class="p">,</span> <span class="n">new_score</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hs_mp1_&#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The score values are None: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, John Harry Arciga &amp; Jonathan David Pagaduan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

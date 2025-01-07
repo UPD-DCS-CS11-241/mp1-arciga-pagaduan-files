@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mp1_classes &mdash; Egg Roll December 8, 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=e0c65429"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Egg Roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">mp1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">test module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Egg Roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mp1_classes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mp1_classes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The mp1_classes.py file is for creating classes</span>
+<span class="sd">that define the different movements and </span>
+<span class="sd">emojis used for the creation of the game.</span>
+<span class="sd">These classes will then be used for the mp1.py</span>
+<span class="sd">file, specifically for the apply_move and</span>
+<span class="sd">shift_eggs functions.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pygame</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygame.locals</span><span class="w"> </span><span class="kn">import</span> <span class="n">QUIT</span><span class="p">,</span> <span class="n">MOUSEBUTTONDOWN</span><span class="p">,</span> <span class="n">KEYDOWN</span><span class="p">,</span> <span class="n">K_ESCAPE</span><span class="p">,</span> <span class="n">K_DELETE</span> <span class="c1"># pylint: disable=no-name-in-module</span>
+
+<div class="viewcode-block" id="Moves">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.Moves">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Moves</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is for defining the leftward,</span>
+<span class="sd">    rightward, forward, and backward movements </span>
+<span class="sd">    to be used for the apply_move function in</span>
+<span class="sd">    the mp1.py file.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">leftward</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;l&#39;</span>
+    <span class="n">rightward</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
+    <span class="n">forward</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;f&#39;</span>
+    <span class="n">backward</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="Board">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.Board">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Board</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is for defining the wall, grass,</span>
+<span class="sd">    pan, egg, empty nest, and full nest emojis</span>
+<span class="sd">    to be used for the shift_eggs function in </span>
+<span class="sd">    the mp1.py file.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">wall</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;🧱&#39;</span>
+    <span class="n">grass</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;🟩&#39;</span>
+    <span class="n">pan</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;🍳&#39;</span>
+    <span class="n">egg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;🥚&#39;</span>
+    <span class="n">empty_nest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;🪹&#39;</span>
+    <span class="n">full_nest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;🪺&#39;</span></div>
+
+
+<div class="viewcode-block" id="LevelsLightImages">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.LevelsLightImages">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LevelsLightImages</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The class Levels_Light_Images is for assigning the object or picture </span>
+<span class="sd">    for the main menu, level selector, and loading screens into variables. </span>
+<span class="sd">    As seen in the code, pygame.image.load() is primarily used to load </span>
+<span class="sd">    the images and frames for the interfaces of the game. These frames are </span>
+<span class="sd">    stored in the images folder. When you just put the filename as the argument, </span>
+<span class="sd">    the game will not load and the terminal will tell you that the </span>
+<span class="sd">    images are not in the current directory or folder. The variables </span>
+<span class="sd">    are also named according to whether the frames are for light or </span>
+<span class="sd">    dark mode.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># These are the images for the light mode.</span>
+    <span class="n">main_menu_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/main_menu_light.png&#39;</span><span class="p">)</span>
+
+    <span class="n">levels_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/levels_light.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_1_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_1_light.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_2_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_2_light.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_3_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_3_light.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_4_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_4_light.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_5_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_5_light.png&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SettingsLightImages">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.SettingsLightImages">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SettingsLightImages</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The class Settings_Light_Images is for assigning the object or picture </span>
+<span class="sd">    for the settings, tutorials, leaderboard, etc. into variables. As seen in </span>
+<span class="sd">    the code, pygame.image.load() is primarily used to load the images and frames </span>
+<span class="sd">    for the interfaces of the game. These frames are stored in the images </span>
+<span class="sd">    folder. When you just put the filename as the argument, the </span>
+<span class="sd">    game will not load and the terminal will tell you that the </span>
+<span class="sd">    images are not in the current directory or folder. The variables </span>
+<span class="sd">    are also named according to whether the frames are for light or </span>
+<span class="sd">    dark mode.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># These are the images for the light mode.</span>
+    <span class="n">settings_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/settings_light.png&#39;</span><span class="p">)</span>
+    <span class="n">tutorials_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/tutorials_light.png&#39;</span><span class="p">)</span>
+    <span class="n">leaderboard_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/leaderboard_light.png&#39;</span><span class="p">)</span>
+    <span class="n">control_keys_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/control_keys_light.png&#39;</span><span class="p">)</span>
+    <span class="n">credits_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/credits_light.png&#39;</span><span class="p">)</span>
+
+    <span class="n">sure_light</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/sure_light.png&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LevelsDarkImages">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.LevelsDarkImages">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LevelsDarkImages</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The class Levels_Dark_Images is for assigning the object or picture </span>
+<span class="sd">    for the main menu, level selector, and loading screens into variables. </span>
+<span class="sd">    As seen in the code, pygame.image.load() is primarily used to </span>
+<span class="sd">    load the images and frames for the interfaces of the game. These </span>
+<span class="sd">    frames are stored in the images folder. When you just put the </span>
+<span class="sd">    filename as the argument, the game will not load and the terminal </span>
+<span class="sd">    will tell you that the images are not in the current directory or </span>
+<span class="sd">    folder. The variables are also named according to whether the frames </span>
+<span class="sd">    are for light or dark mode.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># These are the images for the dark mode.</span>
+    <span class="n">main_menu_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/main_menu_dark.png&#39;</span><span class="p">)</span>
+
+    <span class="n">levels_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/levels_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_1_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_1_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_2_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_2_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_3_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_3_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_4_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_4_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">loading_5_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/loading_5_dark.png&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SettingsDarkImages">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.SettingsDarkImages">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SettingsDarkImages</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The class Settings_Dark_Images is for assigning the object or picture </span>
+<span class="sd">    for the settings, tutorials, leaderboard, etc. into variables. </span>
+<span class="sd">    As seen in the code, pygame.image.load() is primarily used to </span>
+<span class="sd">    load the images and frames for the interfaces of the game. These </span>
+<span class="sd">    frames are stored in the images folder. When you just put the </span>
+<span class="sd">    filename as the argument, the game will not load and the terminal </span>
+<span class="sd">    will tell you that the images are not in the current directory or </span>
+<span class="sd">    folder. The variables are also named according to whether the frames </span>
+<span class="sd">    are for light or dark mode.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># These are the images for the dark mode.</span>
+    <span class="n">settings_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/settings_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">tutorials_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/tutorials_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">leaderboard_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/leaderboard_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">control_keys_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/control_keys_dark.png&#39;</span><span class="p">)</span>
+    <span class="n">credits_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/credits_dark.png&#39;</span><span class="p">)</span>
+
+    <span class="n">sure_dark</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/sure_dark.png&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="EventHandler">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.EventHandler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is for handling event handling of the gui.py which makes</span>
+<span class="sd">    the code in the gui.py much cleaner and simpler.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is for initializing the click (for almost all functions</span>
+<span class="sd">        of the gui.py code and active_level (for the leaderboard </span>
+<span class="sd">        function of the gui.py code). </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">click</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># This is for the leaderboard function</span>
+
+<div class="viewcode-block" id="EventHandler.process_events">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.EventHandler.process_events">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="n">function</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;main_menu&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;levels&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;settings&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;leaderboard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;control&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;exit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;end_game&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The block of code above is responsible for event handling. </span>
+<span class="sd">        Each function has this block of code, wherein it checks if </span>
+<span class="sd">        there are specific keys in the if statements that are clicked. </span>
+<span class="sd">        For instance, if the X on the top of the game window is clicked, </span>
+<span class="sd">        the program will stop; if the left key on the mouse is clicked, </span>
+<span class="sd">        the click will be equal to True -- meaning that a specific </span>
+<span class="sd">        button is clicked; and if the ESC button is clicked, the </span>
+<span class="sd">        function will return to True which is needed to carry out the </span>
+<span class="sd">        different functions in the gui.py code. Also, the DELETE key</span>
+<span class="sd">        is functional here when DELETE key is pressed after the game</span>
+<span class="sd">        round in the game.py.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">QUIT</span><span class="p">:</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>  <span class="c1"># pylint: disable=no-member</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">MOUSEBUTTONDOWN</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">button</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">click</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">function</span> <span class="o">==</span> <span class="s2">&quot;main_menu&quot;</span><span class="p">:</span>
+                    <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span> <span class="c1"># pylint: disable=no-member</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">function</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;levels&quot;</span><span class="p">,</span> <span class="s2">&quot;settings&quot;</span><span class="p">,</span> <span class="s2">&quot;leaderboard&quot;</span><span class="p">,</span> <span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="s2">&quot;exit&quot;</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_DELETE</span> <span class="ow">and</span> <span class="n">function</span> <span class="o">==</span> <span class="s2">&quot;end_game&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="EventHandler.reset_click">
+<a class="viewcode-back" href="../mp1_classes.html#mp1_classes.EventHandler.reset_click">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_click</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is for resetting the click to False in the</span>
+<span class="sd">        gui.py file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">click</span> <span class="o">=</span> <span class="kc">False</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, John Harry Arciga &amp; Jonathan David Pagaduan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

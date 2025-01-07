@@ -1,0 +1,7 @@
+the\_dev\_notes module
+======================
+
+.. automodule:: the_dev_notes
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>test &mdash; Egg Roll December 8, 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=e0c65429"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Egg Roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">mp1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">test module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Egg Roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">test</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for test</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The test.py file contains the different test cases used to test the </span>
+<span class="sd">functions of the mp1.py file. You may check that it works through </span>
+<span class="sd">typing pytest test.py. You may insert a new test case by adding </span>
+<span class="sd">assert function_name(&#39;input_depending_on_args&#39;) == correct_output </span>
+<span class="sd">at the end of each function. The file imported the functions </span>
+<span class="sd">separate_moves, step_shift_eggs_with_rules, tilt_grid, and </span>
+<span class="sd">apply_moves from the mp1.py file.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mp1</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">separate_moves</span><span class="p">,</span>
+    <span class="n">shift_eggs</span><span class="p">,</span>
+    <span class="n">tilt_grid</span><span class="p">,</span>
+    <span class="n">apply_move</span><span class="p">,</span>
+    <span class="n">process_lines</span>
+<span class="p">)</span>
+
+<div class="viewcode-block" id="test_separate_moves">
+<a class="viewcode-back" href="../test.html#test.test_separate_moves">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_separate_moves</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In the test_separate_moves function, there are several test cases </span>
+<span class="sd">    wherein we checked if the separate_moves function works correctly </span>
+<span class="sd">    for instances when a string of input (whether they are lowercase or </span>
+<span class="sd">    uppercase, or with LBRF or none) is given or when a number or </span>
+<span class="sd">    whitespace is given. When empty string, numbers, or whitespaces </span>
+<span class="sd">    are given as input, the separate_moves returns an empty list, </span>
+<span class="sd">    meaning that the function does not consider those inputs. </span>
+<span class="sd">    Also, we checked if the function correctly extracts the LFRB </span>
+<span class="sd">    letters in every possible input.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;ZZZZZF&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;1.00&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;lh&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;lahkhhai&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;i am testing my input&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;i love cs 11 so much&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;09176151201&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;us2 ko na magpasko yeah&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;lLfFrRbB&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;LLLL&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;RRRR&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;FFFF&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">separate_moves</span><span class="p">(</span><span class="s1">&#39;BBBB&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+    <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="test_shift_eggs">
+<a class="viewcode-back" href="../test.html#test.test_shift_eggs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_shift_eggs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In the test_shift_eggs function, there are several test cases </span>
+<span class="sd">    wherein we checked if the function correctly does the basic </span>
+<span class="sd">    shifting such as left or right when there are only grass and </span>
+<span class="sd">    eggs on the screen, penalty scenarios wherein there are frying </span>
+<span class="sd">    pans involved, reward scenarios wherein there are empty nests </span>
+<span class="sd">    involved, cases when there are two eggs and there is only one </span>
+<span class="sd">    empty nests, cases when there are eggs and full nests (if the </span>
+<span class="sd">    eggs will move or not), and empty strings if the rows do not </span>
+<span class="sd">    have any icons. Note that the function shift_eggs is a function </span>
+<span class="sd">    that shifts the eggs one tile at a time (so if the frying pan </span>
+<span class="sd">    is on the left, and there are three eggs moving to the left, </span>
+<span class="sd">    only one egg will disappear as in the mp1.py, it is in the </span>
+<span class="sd">    nested loop, one frame at a time).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🥚🟩🟩&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🟩🥚&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🍳🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🍳🟩🟩&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🍳&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🟩🍳&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🪹🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🪺🟩🟩&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🪹&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🟩🪺&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🪺🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🪺🥚🟩&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🪺&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🥚🪺&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🥚🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🥚🥚🟩&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🥚&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🥚🥚&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🥚🥚🟩🟩&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🟩🥚🥚&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🪹🥚🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🪺🥚🟩🟩&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🥚🪹&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🟩🥚🪺&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🪺🥚🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🪺🥚🥚🟩&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🥚🪺&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🥚🥚🪺&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🍳🥚🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🍳🥚🟩🟩&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🥚🍳&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🟩🥚🍳&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🟩🥚🥚🪹&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🟩🟩🥚🪺&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="s1">&#39;🍳🥚🥚🟩&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;🍳🥚🟩🟩&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="test_tilt_grid">
+<a class="viewcode-back" href="../test.html#test.test_tilt_grid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_tilt_grid</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In the test_tilt_grid function, there are several test cases wherein </span>
+<span class="sd">    we checked if the function correctly does the basic left, right, down, </span>
+<span class="sd">    and up shifts in every scenario mentioned after this, penalty scenarios </span>
+<span class="sd">    that involves frying pans, reward scenarios that involve empty nests, </span>
+<span class="sd">    and scenarios that involve full nests. They were added as it was </span>
+<span class="sd">    integral to the adherence to the game mechanics, and to make sure </span>
+<span class="sd">    that the basic components of the game are correct in execution.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🪹&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🍳&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🍳&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🪹&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🍳&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🍳&#39;</span><span class="p">],</span> <span class="p">],</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🪺&#39;</span><span class="p">],],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🥚&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🪹&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🍳&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🍳&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🪹&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🍳&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🍳&#39;</span><span class="p">]],</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tilt_grid</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="test_apply_move">
+<a class="viewcode-back" href="../test.html#test.test_apply_move">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_apply_move</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In the test_apply_move function, there are several test cases </span>
+<span class="sd">    wherein we checked if the function correctly returns the expected </span>
+<span class="sd">    output after applying a specific move depending on the players&#39; </span>
+<span class="sd">    input. There are basic test cases that checks the result of the </span>
+<span class="sd">    function for different directions, penalty scenarios that involves </span>
+<span class="sd">    eggs moving to frying pans, reward scenarios that involve eggs </span>
+<span class="sd">    moving towards empty nests, and scenarios that involve eggs moving </span>
+<span class="sd">    towards full nests. They were added to the set of test cases as </span>
+<span class="sd">    they will check if the points are calculated correctly depending </span>
+<span class="sd">    on where the egg lands, and if the correct icon was displayed at </span>
+<span class="sd">    the end of every move.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🪹&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🍳&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🍳&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">]],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🪹&#39;</span><span class="p">]],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🍳&#39;</span><span class="p">]],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🍳&#39;</span><span class="p">]],</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">apply_move</span><span class="p">([[</span><span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="p">([[</span><span class="s1">&#39;🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;🥚&#39;</span><span class="p">,</span> <span class="s1">&#39;🪺&#39;</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="test_process_lines">
+<a class="viewcode-back" href="../test.html#test.test_process_lines">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_process_lines</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    In this function, there are several test cases wherein we checked if</span>
+<span class="sd">    the function process_lines processed the lines containing eggs, pans, </span>
+<span class="sd">    nests, etc. We tested cases where the eggs have to shift to the left or</span>
+<span class="sd">    right, and cases where there are only eggs on the picture, or when eggs</span>
+<span class="sd">    have pans beside them.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">process_lines</span><span class="p">([</span><span class="s1">&#39;🟩🥚🪹&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">([</span><span class="s1">&#39;🟩🟩🪺&#39;</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">process_lines</span><span class="p">([</span><span class="s1">&#39;🟩🥚🍳&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">([</span><span class="s1">&#39;🥚🟩🍳&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">process_lines</span><span class="p">([</span><span class="s1">&#39;🥚🥚🥚&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">([</span><span class="s1">&#39;🥚🥚🥚&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">process_lines</span><span class="p">([</span><span class="s1">&#39;🪹🥚🥚&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">([</span><span class="s1">&#39;🪹🥚🥚&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">process_lines</span><span class="p">([</span><span class="s1">&#39;🟩🥚🪹&#39;</span><span class="p">,</span> <span class="s1">&#39;🍳🥚🟩&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">([</span><span class="s1">&#39;🟩🟩🪺&#39;</span><span class="p">,</span> <span class="s1">&#39;🍳🟩🥚&#39;</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">process_lines</span><span class="p">([</span><span class="s1">&#39;🪺🥚🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">([</span><span class="s1">&#39;🪺🥚🟩&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">test_apply_move</span><span class="p">()</span>
+    <span class="n">test_process_lines</span><span class="p">()</span>
+    <span class="n">test_tilt_grid</span><span class="p">()</span>
+    <span class="n">test_shift_eggs</span><span class="p">()</span>
+    <span class="n">test_separate_moves</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, John Harry Arciga &amp; Jonathan David Pagaduan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

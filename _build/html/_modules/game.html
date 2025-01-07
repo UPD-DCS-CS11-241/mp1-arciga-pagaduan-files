@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>game &mdash; Egg Roll December 8, 2024 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=e0c65429"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Egg Roll
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">mp1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test.html">test module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Egg Roll</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">game</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for game</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The game.py file contains the different functions that enable </span>
+<span class="sd">our team to create the game interface. To give an overview on </span>
+<span class="sd">how the whole file works, we used the pygame library to create </span>
+<span class="sd">features such as button and loading images onto the screen. </span>
+<span class="sd">The game.py shows the different assets or the icons used to load </span>
+<span class="sd">the nests, eggs, etc. on the game screen through calling screen.blit() </span>
+<span class="sd">across the document. It also contains the logic behind how the points </span>
+<span class="sd">are calculated and to determine if the game is over or not.</span>
+
+<span class="sd">The code block from &quot;from typing&quot; to &quot;from mp1_classes&quot; imports </span>
+<span class="sd">pygame as it is the library used for loading screen frames, </span>
+<span class="sd">sys for system commands such as quitting the game, and KEYDOWN, </span>
+<span class="sd">K_UP, and others as they will be used in the start_with_gui_level() </span>
+<span class="sd">function to detect if the keys clicked on the keyboard are the letter </span>
+<span class="sd">keys or the arrow keys for the game to progress. It also contains the </span>
+<span class="sd">global variables for the screen width, screen height, and frame per </span>
+<span class="sd">second which are the basis to the screen resolution of the game. </span>
+<span class="sd">We used 960 x 768 pixels as it is not large (or wide enough) but </span>
+<span class="sd">it is also not small. We also used 60 frames per second as it is </span>
+<span class="sd">one of the most common FPS in games.</span>
+
+<span class="sd">The typing module is used for the mypy --strict and pyright checking.</span>
+<span class="sd">The mp1_classes module is used for handling events such as when the</span>
+<span class="sd">DELETE key is pressed to restart the level.</span>
+
+<span class="sd">The block of code that consists of game_light up to lose_dark variables </span>
+<span class="sd">assigns the pictures on the images folder loaded via pygame.image.load() </span>
+<span class="sd">into variables. This is important as it will be used in the </span>
+<span class="sd">start_gui_with_level() function on loading the game interface screen and </span>
+<span class="sd">the frames that show you if you win or lose the game.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pygame</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pygame.locals</span><span class="w"> </span><span class="kn">import</span> <span class="n">KEYDOWN</span><span class="p">,</span> <span class="n">K_UP</span><span class="p">,</span> <span class="n">K_DOWN</span><span class="p">,</span> <span class="n">K_LEFT</span><span class="p">,</span> <span class="n">K_RIGHT</span><span class="p">,</span> <span class="n">K_f</span><span class="p">,</span> <span class="n">K_b</span><span class="p">,</span> <span class="n">K_l</span><span class="p">,</span> <span class="n">K_r</span><span class="p">,</span> <span class="n">QUIT</span><span class="p">,</span> <span class="n">K_DELETE</span> <span class="c1"># pylint: disable=no-name-in-module</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mp1_classes</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventHandler</span><span class="p">,</span> <span class="n">Board</span>
+
+<span class="n">SCREEN_WIDTH</span> <span class="o">=</span> <span class="mi">960</span>
+<span class="n">SCREEN_HEIGHT</span> <span class="o">=</span> <span class="mi">768</span>
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">60</span>
+
+<span class="n">game_light</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/game_light.png&#39;</span><span class="p">)</span>
+<span class="n">game_dark</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/game_dark.png&#39;</span><span class="p">)</span>
+<span class="n">win_light</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/win_light.png&#39;</span><span class="p">)</span>
+<span class="n">win_dark</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/win_dark.png&#39;</span><span class="p">)</span>
+<span class="n">lose_light</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/lose_light.png&#39;</span><span class="p">)</span>
+<span class="n">lose_dark</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;images/lose_dark.png&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="load_assets">
+<a class="viewcode-back" href="../game.html#game.load_assets">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_assets</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The load_assets function is responsible for loading the icons </span>
+<span class="sd">    in the game such as the eggs, grass, walls, frying pans, and nests. </span>
+<span class="sd">    It has a dictionary assets that has strings of the description of </span>
+<span class="sd">    the icons as the keys and the object being loaded via </span>
+<span class="sd">    pygame.image.load() as the values. These objects or images </span>
+<span class="sd">    will be scaled down to 81 by 81 pixels via the pygame.transform.scale, </span>
+<span class="sd">    and the function will return a dictionary of these scaled images.</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        None as it is a callable function for loading game assets.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        assets (Dict[str,pygame.Surface]): A dictionary containing scaled image assets.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">assets</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;egg&quot;</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/egg.png&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;nest&quot;</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/nest.png&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;full_nest&quot;</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/full_nest.png&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;frying_pan&quot;</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/frying_pan.png&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;grass&quot;</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/grass.png&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;wall&quot;</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/wall.png&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">assets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">assets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="mi">81</span><span class="p">,</span> <span class="mi">81</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">assets</span></div>
+
+
+
+<div class="viewcode-block" id="display_grid">
+<a class="viewcode-back" href="../game.html#game.display_grid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">display_grid</span><span class="p">(</span><span class="n">screen</span><span class="p">:</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">,</span>
+    <span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">assets</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The display_grid function is responsible for displaying the grid of </span>
+<span class="sd">    the ones in the .in files and the grids on the .in files will then </span>
+<span class="sd">    be represented by every value in the dictionary assets through series </span>
+<span class="sd">    of if statements. It accepts three arguments: screen which pertains </span>
+<span class="sd">    to the game screen with width and height which will be defined on the </span>
+<span class="sd">    start_with_gui_level function, the grid which will be also defined in </span>
+<span class="sd">    the said function as it will be saved by calling the load_level function, </span>
+<span class="sd">    and the assets which will be defined as the start_with_gui_level calls </span>
+<span class="sd">    display_grid. The nested for loops iterate each row first through the </span>
+<span class="sd">    for row_idx... and column through for col_idx.... The x and y are the </span>
+<span class="sd">    basis for the starting position where the assets or icons will be placed. </span>
+<span class="sd">    The multiplier here is 27 since through trial and error, we observed that </span>
+<span class="sd">    the width and height of every cell or icon must be 1/3 of the dimension </span>
+<span class="sd">    of the scaled assets or icons in the display_grid function (81 x 81). </span>
+<span class="sd">    The nested loops are responsible for iterating every row and every column </span>
+<span class="sd">    of the grid, filling the cells or the square areas with the icons in the </span>
+<span class="sd">    assets (substituting eggs emoji with the image of an egg for example).</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        screen (pygame.Surface): The game screen surface.</span>
+<span class="sd">        grid (List[List[str]]): The game grid.</span>
+<span class="sd">        assets (Dict[str, pygame.Surface]): Dictionary of game assets.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">row_idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col_idx</span><span class="p">,</span> <span class="n">cell</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">col_idx</span> <span class="o">*</span> <span class="mi">27</span><span class="p">,</span> <span class="n">row_idx</span> <span class="o">*</span> <span class="mi">27</span>
+            <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;🥚&#39;</span><span class="p">:</span>
+                <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">assets</span><span class="p">[</span><span class="s1">&#39;egg&#39;</span><span class="p">],</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;🪹&#39;</span><span class="p">:</span>
+                <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">assets</span><span class="p">[</span><span class="s1">&#39;nest&#39;</span><span class="p">],</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;🪺&#39;</span><span class="p">:</span>
+                <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">assets</span><span class="p">[</span><span class="s1">&#39;full_nest&#39;</span><span class="p">],</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;🍳&#39;</span><span class="p">:</span>
+                <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">assets</span><span class="p">[</span><span class="s1">&#39;frying_pan&#39;</span><span class="p">],</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;🟩&#39;</span><span class="p">:</span>
+                <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">assets</span><span class="p">[</span><span class="s1">&#39;grass&#39;</span><span class="p">],</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">assets</span><span class="p">[</span><span class="s1">&#39;wall&#39;</span><span class="p">],</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="load_level">
+<a class="viewcode-back" href="../game.html#game.load_level">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_level</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The load_level function is responsible for loading the files in </span>
+<span class="sd">    .in format. It accepts filename path as the argument. The function </span>
+<span class="sd">    then opens the file in UTF-8 format using with open... as file. </span>
+<span class="sd">    The first line of the file is saved as num_rows, the second line </span>
+<span class="sd">    as num_moves, and the next remaining lines are saved as a list of </span>
+<span class="sd">    lines in the variable grid. The function returns the grid as a </span>
+<span class="sd">    list of lines of emojis, num_moves representing the number of moves </span>
+<span class="sd">    available, and 0 since it will be saved as the initial point or score </span>
+<span class="sd">    in the start_gui_with_level function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The name of the level file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[List[str]], int, int]:</span>
+<span class="sd">            - The game grid.</span>
+<span class="sd">            - The number of moves allowed.</span>
+<span class="sd">            - The initial score (0).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">num_moves</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="get_leaderboard_scores">
+<a class="viewcode-back" href="../game.html#game.get_leaderboard_scores">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_leaderboard_scores</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function reads the leaderboard file (hs_gui_level#.in) </span>
+<span class="sd">    related to the file opened in the terminal. It saves the Top 3 </span>
+<span class="sd">    scores from the file into variables first, second, and third, and returns them.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The name of the leaderboard file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[int, int, int]:</span>
+<span class="sd">            - First place score.</span>
+<span class="sd">            - Second place score.</span>
+<span class="sd">            - Third place score.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">leaderboard_file</span> <span class="o">=</span> <span class="s1">&#39;hs_gui_&#39;</span> <span class="o">+</span> <span class="n">filename</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">leaderboard_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">second</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">third</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">,</span> <span class="n">third</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot read the leaderboard file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="apply_move">
+<a class="viewcode-back" href="../game.html#game.apply_move">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_move</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">move</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function applies a move to the grid and updates the points. The apply_move </span>
+<span class="sd">    function has three arguments: grid which is the list of rows of emojis loaded by </span>
+<span class="sd">    the load_level function, move which is the character in &#39;lfrb&#39;, and points which </span>
+<span class="sd">    is the points accumulated by the player. Through if statements, the function checks </span>
+<span class="sd">    the appropriate action to do depending on the move. If move == &#39;l&#39;, it will call </span>
+<span class="sd">    tilt_grid with dy = -1. The dy and dx will change depending on the value of move. </span>
+<span class="sd">    The function will return an updated grid which is a list of rows of emojis and </span>
+<span class="sd">    the updated points.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid (List[List[str]]): The current game grid.</span>
+<span class="sd">        move (str): The move direction (&#39;l&#39;, &#39;r&#39;, &#39;f&#39;, &#39;b&#39;).</span>
+<span class="sd">        points (int): The current score.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[List[str]], int, bool]:</span>
+<span class="sd">            - The updated grid.</span>
+<span class="sd">            - The updated score.</span>
+<span class="sd">            - Whether the move was valid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prev_grid</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">dx</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">move</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">grid</span> <span class="o">!=</span> <span class="n">prev_grid</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="tilt_grid">
+<a class="viewcode-back" href="../game.html#game.tilt_grid">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tilt_grid</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function handles the tilting of the grid in a specific direction. It uses a </span>
+<span class="sd">    while loop that runs as long as movements are possible, determined by the `moved` </span>
+<span class="sd">    variavle. Depending on `dx` and `dy`, the function processes rows </span>
+<span class="sd">    (horizontal movement or dx = 0) or columns (vertical movement or dx != 0) </span>
+<span class="sd">    by combining them into strings and passing them to the process_lines function.</span>
+
+<span class="sd">    The grid is updated based on the processed lines, either by replacing rows for </span>
+<span class="sd">    horizontal movement or updating columns for vertical movement. </span>
+<span class="sd">    If any movement occurs, the grid will be displayed through </span>
+<span class="sd">    the display_grid function. If there are no further movements are possible, </span>
+<span class="sd">    the function returns the updated grid and score.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid (List[List[str]]): The current game grid.</span>
+<span class="sd">        points (int): The current score.</span>
+<span class="sd">        dx (int): Row direction (-1 for up, 1 for down, 0 for no change).</span>
+<span class="sd">        dy (int): Column direction (-1 for left, 1 for right, 0 for no change).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[List[str]], int]: The updated grid and points.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">while</span> <span class="n">moved</span><span class="p">:</span>
+        <span class="n">moved</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span> <span class="k">if</span> <span class="n">dx</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span>
+            <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cols</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span> <span class="k">if</span> <span class="p">(</span><span class="n">dx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">dy</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;right&#39;</span>
+        <span class="n">updated_lines</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">moved</span> <span class="o">=</span> <span class="n">process_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">updated_lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">dx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">grid</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">):</span>
+                    <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">points</span></div>
+
+
+
+<div class="viewcode-block" id="process_lines">
+<a class="viewcode-back" href="../game.html#game.process_lines">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function processes multiple lines (rows or columns) for egg </span>
+<span class="sd">    movement by calling the shift_eggs function and getting the</span>
+<span class="sd">    updated lines (if the eggs have shifted). It will return the updated</span>
+<span class="sd">    lines, the updated points, and if the eggs moved or not.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lines (List[str]): A list of strings representing rows or columns of the grid.</span>
+<span class="sd">        points (int): The current score.</span>
+<span class="sd">        direction (str): The direction of movement (&#39;left&#39; or &#39;right&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[str], int, bool]: </span>
+<span class="sd">            - List[str]: The updated lines after processing movement.</span>
+<span class="sd">            - int: The updated score.</span>
+<span class="sd">            - bool: Whether any movement occurred.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">moved</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">updated_lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">shifted_line</span><span class="p">,</span> <span class="n">line_moved</span><span class="p">,</span> <span class="n">updated_points</span> <span class="o">=</span> <span class="n">shift_eggs</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
+        <span class="n">updated_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shifted_line</span><span class="p">)</span>
+        <span class="n">moved</span> <span class="o">=</span> <span class="n">moved</span> <span class="ow">or</span> <span class="n">line_moved</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">updated_points</span>
+    <span class="k">return</span> <span class="n">updated_lines</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">moved</span></div>
+
+
+<div class="viewcode-block" id="shift_eggs">
+<a class="viewcode-back" href="../game.html#game.shift_eggs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">shift_eggs</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is responsible for shifting the eggs to the left, </span>
+<span class="sd">    right, up, or down depending on the argument direction. It has </span>
+<span class="sd">    three arguments: line which is either a row or a column, points </span>
+<span class="sd">    which is the initial points, and direction. It has variables for </span>
+<span class="sd">    every emoji of grass, eggs, etc, and a variable moved = False </span>
+<span class="sd">    which will be changed if the eggs in the line shifted, determining </span>
+<span class="sd">    the moved_any on the tilt_grid function. The code block contains </span>
+<span class="sd">    if statements depending on the direction, and it usually checks </span>
+<span class="sd">    if the pan is on the direction of the egg (which changes </span>
+<span class="sd">    the egg tile into grass tile), or if the nest that is empty is </span>
+<span class="sd">    on the direction of the egg (which changes the nest into a full </span>
+<span class="sd">    nest), or if the grass is next to the egg (which changes the egg </span>
+<span class="sd">    tile into grass tile and vice versa). The function returns a </span>
+<span class="sd">    joined line_list, wherein the initial line_list is the value </span>
+<span class="sd">    of line and the updated line_listis the one changed through </span>
+<span class="sd">    index checking and changing of values on the list. It also </span>
+<span class="sd">    returns moved if the eggs shifted and points if the player </span>
+<span class="sd">    accumulated points for moving.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        line (str): A string representing a single row or column of the grid.</span>
+<span class="sd">        points (int): The current score.</span>
+<span class="sd">        direction (str): The direction of movement (&#39;left&#39; or &#39;right&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, bool, int]: </span>
+<span class="sd">            - str: The updated line after movement.</span>
+<span class="sd">            - bool: Whether any movement occurred in the line.</span>
+<span class="sd">            - int: The updated score.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">line_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">moved</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">match</span> <span class="n">direction</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_list</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;🥚&#39;</span><span class="p">:</span>
+                    <span class="k">match</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">pan</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">-=</span> <span class="mi">5</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">empty_nest</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">full_nest</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">+=</span> <span class="mi">10</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">case</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;🥚&#39;</span><span class="p">:</span>
+                    <span class="k">match</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">pan</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">-=</span> <span class="mi">5</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">empty_nest</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">full_nest</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">points</span> <span class="o">+=</span> <span class="mi">10</span>
+                        <span class="k">case</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span><span class="p">:</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">line_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Board</span><span class="o">.</span><span class="n">grass</span>
+                            <span class="n">moved</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line_list</span><span class="p">),</span> <span class="n">moved</span><span class="p">,</span> <span class="n">points</span></div>
+
+
+
+<div class="viewcode-block" id="is_game_over">
+<a class="viewcode-back" href="../game.html#game.is_game_over">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_game_over</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">num_moves</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The is_game_over function checks if the game is over by checking </span>
+<span class="sd">    whether the empty_nests == 0, eggs == 0, or num_moves == 0 through </span>
+<span class="sd">    the function .count(). In the empty_nests, the count of empty nests </span>
+<span class="sd">    will be checked for every row, and their sum will be added. </span>
+<span class="sd">    Same goes for the eggs where the count of the eggs will be checked </span>
+<span class="sd">    in every row. The function returns True if either the empty nests, </span>
+<span class="sd">    eggs, or number of moves count is 0 and False if otherwise.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid (List[List[str]]): The current game grid.</span>
+<span class="sd">        num_moves (int): The remaining number of moves.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the game is over, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">empty_nests</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;🪹&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">)</span>
+    <span class="n">eggs</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;🥚&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">empty_nests</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">eggs</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">num_moves</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="check_if_win_or_lose">
+<a class="viewcode-back" href="../game.html#game.check_if_win_or_lose">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_if_win_or_lose</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The check_if_win_or_lose function checks if at the end of the </span>
+<span class="sd">    movement (or gaming session), the player loses or wins by checking </span>
+<span class="sd">    the sum of the count of empty nests per row which is saved in the </span>
+<span class="sd">    empty nests variable. If empty_nests == 0, the function returns </span>
+<span class="sd">    True, signifying that the player wins the game, and False if </span>
+<span class="sd">    otherwise, signifying that the player loses the game.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid (List[List[str]]): The current game grid.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the player won, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">empty_nests</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;🪹&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">empty_nests</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="change_leaderboard">
+<a class="viewcode-back" href="../game.html#game.change_leaderboard">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">change_leaderboard</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_score</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function updates the leaderboard with a new score. It will be </span>
+<span class="sd">    called by the &#39;main&#39; function once the game round is finished. It will</span>
+<span class="sd">    call the &#39;get_leaderboard&#39; function to retrieve the Top 3 scores for </span>
+<span class="sd">    the level. These scores will then be stored in a list where they will be</span>
+<span class="sd">    sorted, and the (new) Top 3 scores will be extracted and written in the</span>
+<span class="sd">    leaderboard file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The stage file name</span>
+<span class="sd">        new_score (int): The new score to be added on the leaderboard</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">first_score</span><span class="p">,</span> <span class="n">second_score</span><span class="p">,</span> <span class="n">third_score</span> <span class="o">=</span> <span class="n">get_leaderboard_scores</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">first_score</span><span class="p">,</span> <span class="n">second_score</span><span class="p">,</span> <span class="n">third_score</span><span class="p">,</span> <span class="n">new_score</span><span class="p">]</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hs_gui_&#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="process_game_events">
+<a class="viewcode-back" href="../game.html#game.process_game_events">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_game_events</span><span class="p">(</span><span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">num_moves</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">prev_moves</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function creates a dictionary that maps every key on the</span>
+<span class="sd">    keyboard to a specific letter in &#39;fblr&#39;. It process game events </span>
+<span class="sd">    like key presses and update the game state through the apply_move </span>
+<span class="sd">    function, returning the updated grid, number of moves, points, and</span>
+<span class="sd">    list of previous moves.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        grid (List[List[str]]): The current game grid.</span>
+<span class="sd">        num_moves (int): The remaining number of moves.</span>
+<span class="sd">        points (int): The current score.</span>
+<span class="sd">        prev_moves (List[str]): The list of previous moves.</span>
+<span class="sd">        filename (str): The name of the level file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[List[str]], int, int, List[str]]: Updated game </span>
+<span class="sd">        state (grid, moves, score, and previous moves).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">key_to_move</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">K_UP</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+        <span class="n">K_f</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+        <span class="n">K_DOWN</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+        <span class="n">K_b</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+        <span class="n">K_LEFT</span><span class="p">:</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span>
+        <span class="n">K_l</span><span class="p">:</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span>
+        <span class="n">K_RIGHT</span><span class="p">:</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span>
+        <span class="n">K_r</span><span class="p">:</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">QUIT</span><span class="p">:</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>  <span class="c1"># pylint: disable=no-member</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_DELETE</span><span class="p">:</span>
+                <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">load_level</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">prev_moves</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">continue</span>
+
+            <span class="n">move</span> <span class="o">=</span> <span class="n">key_to_move</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">move</span><span class="p">:</span>
+                <span class="n">grid</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">valid_move</span> <span class="o">=</span> <span class="n">apply_move</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">move</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">valid_move</span><span class="p">:</span>
+                    <span class="n">prev_moves</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">move</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+                    <span class="n">num_moves</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">prev_moves</span></div>
+
+
+
+
+<div class="viewcode-block" id="start_gui_with_level">
+<a class="viewcode-back" href="../game.html#game.start_gui_with_level">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">start_gui_with_level</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span><span class="p">,</span> <span class="n">tutorial</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The start_gui_with_level function is responsible for doing everything </span>
+<span class="sd">    that involves the .in files: from loading the files, applying the moves, </span>
+<span class="sd">    checking if the game is over, and others by calling several functions </span>
+<span class="sd">    throughout the game.py file. It starts by initializing the pygame through </span>
+<span class="sd">    pygame.init(), the screen with width and height, the caption for the </span>
+<span class="sd">    game window, and the clock for the time within the game (for the frame </span>
+<span class="sd">    per second). The function accepts two arguments: the filename which is </span>
+<span class="sd">    a path of the file and the mode (the default is &quot;light&quot;, and calling </span>
+<span class="sd">    the function with one argument means that the function will load the </span>
+<span class="sd">    game screen in light mode). The load_assets will then be called so that </span>
+<span class="sd">    there will be scaled icons saved in assets variable. The file is then </span>
+<span class="sd">    loaded by calling the load_level function, extracting the grid, </span>
+<span class="sd">    number of moves, and initial points. It has a while loop which </span>
+<span class="sd">    checks for every event or action that the player does on the keyboard </span>
+<span class="sd">    or the game window. Every key is checked in the process_game_events</span>
+<span class="sd">    function. The if statements with the KEYDOWN and other </span>
+<span class="sd">    conditions with K is for checking every event or action on the keyboard. </span>
+<span class="sd">    If the X on the game window is pressed, the game window disappears. </span>
+<span class="sd">    Pressing the UP arrow key or F calls the function apply_move with &#39;f&#39; </span>
+<span class="sd">    as its direction, pressing the DOWNarrow key or B calls the function </span>
+<span class="sd">    apply_move with &#39;b&#39; as its direction, pressing the LEFT arrow key or </span>
+<span class="sd">    L calls the function apply_move with &#39;l&#39; as its direction, and pressing </span>
+<span class="sd">    the RIGHT arrow key or R calls the function apply_move with &#39;r&#39; as its </span>
+<span class="sd">    direction. The movement done is then appended on the prev_moves. </span>
+<span class="sd">    The screen is shown through the screen.blit(...) call, which shows the </span>
+<span class="sd">    light mode of the game interface if the mode = &quot;light&quot; and dark mode if </span>
+<span class="sd">    mode = &quot;dark&quot;. The function display_grid is called to display the </span>
+<span class="sd">    contents of the file, substituting every emojis into their corresponding </span>
+<span class="sd">    icons in the assets. The previous moves, number of moves available, </span>
+<span class="sd">    and points are displayed through the code below. Note that the </span>
+<span class="sd">    previous moves will only be shown the prev_moves is not an empty list.</span>
+<span class="sd">    </span>
+<span class="sd">    There are two helper functions inside this function: the draw_game_texts</span>
+<span class="sd">    and the handle_game_end. The draw_game_texts handles the drawing of the</span>
+<span class="sd">    game texts such as the previous moves, points, and number of moves</span>
+<span class="sd">    remaining. The handle_game_end function is responsible for checking if</span>
+<span class="sd">    the game has already ended, and what to do when such thing happens.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The name of the level file.</span>
+<span class="sd">        mode (str, optional): Display mode (&#39;light&#39; or &#39;dark&#39;). Defaults to &quot;light&quot;.</span>
+<span class="sd">        tutorial (bool, optional): Whether the game is in tutorial mode. Defaults to False.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>  <span class="c1"># pylint: disable=no-member</span>
+    <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="p">))</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;Egg Roll&quot;</span><span class="p">)</span>
+    <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+
+    <span class="n">assets</span> <span class="o">=</span> <span class="n">load_assets</span><span class="p">()</span>
+    <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="n">points</span> <span class="o">=</span> <span class="n">load_level</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">prev_moves</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">font</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw_game_texts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This handles drawing game text components on the screen while</span>
+<span class="sd">        the game is ongoing. It displays the previous moves (if any),</span>
+<span class="sd">        number of moves remaining, and the points accumulated by the player.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">game_light</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;light&quot;</span> <span class="k">else</span> <span class="n">game_dark</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">display_grid</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">assets</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">prev_moves</span><span class="p">:</span>
+            <span class="n">prev_moves_text</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prev_moves</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">prev_moves_text</span><span class="p">,</span> <span class="p">(</span><span class="mi">315</span><span class="p">,</span> <span class="mi">583</span><span class="p">))</span>
+        <span class="n">moves_text</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_moves</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">moves_text</span><span class="p">,</span> <span class="p">(</span><span class="mi">315</span><span class="p">,</span> <span class="mi">623</span><span class="p">))</span>
+        <span class="n">points_text</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">points_text</span><span class="p">,</span> <span class="p">(</span><span class="mi">315</span><span class="p">,</span> <span class="mi">668</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_game_end</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This handles end-game display and leaderboard updates by calling</span>
+<span class="sd">        the check_if_win_or_lose function. It is responsible for displaying</span>
+<span class="sd">        the final points, number of moves remaining, and the moves used</span>
+<span class="sd">        throughout the game. The leaderboard is then changed if the level</span>
+<span class="sd">        shown is not a tutorial level. The background is displayed through the</span>
+<span class="sd">        screen.blit function, while the texts use font.render with the arguments </span>
+<span class="sd">        string, True for anti-aliasing (for good-quality text display), and </span>
+<span class="sd">        the RGB code. It then calls the process_events in the mp1_classes.py</span>
+<span class="sd">        if the user wants to restart the level or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">event_handler</span> <span class="o">=</span> <span class="n">EventHandler</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">check_if_win_or_lose</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+            <span class="n">points_to_add</span> <span class="o">=</span> <span class="n">num_moves</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="n">final_points</span> <span class="o">=</span> <span class="n">points</span> <span class="o">+</span> <span class="n">points_to_add</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">win_light</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;light&quot;</span> <span class="k">else</span> <span class="n">win_dark</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">final_points</span> <span class="o">=</span> <span class="n">points</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">lose_light</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;light&quot;</span> <span class="k">else</span> <span class="n">lose_dark</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tutorial</span><span class="p">:</span>
+            <span class="n">change_leaderboard</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">final_points</span><span class="p">)</span>
+        <span class="n">display_grid</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">assets</span><span class="p">)</span>
+        <span class="n">prev_moves_text</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prev_moves</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">prev_moves_text</span><span class="p">,</span> <span class="p">(</span><span class="mi">315</span><span class="p">,</span> <span class="mi">583</span><span class="p">))</span>
+        <span class="n">moves_text</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_moves</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">moves_text</span><span class="p">,</span> <span class="p">(</span><span class="mi">315</span><span class="p">,</span> <span class="mi">623</span><span class="p">))</span>
+        <span class="n">points_text</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">final_points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">points_text</span><span class="p">,</span> <span class="p">(</span><span class="mi">315</span><span class="p">,</span> <span class="mi">668</span><span class="p">))</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">restart</span> <span class="o">=</span> <span class="n">event_handler</span><span class="o">.</span><span class="n">process_events</span><span class="p">(</span><span class="s2">&quot;end_game&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">restart</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">start_gui_with_level</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="n">num_moves</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">prev_moves</span> <span class="o">=</span> <span class="n">process_game_events</span><span class="p">(</span>
+            <span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">prev_moves</span><span class="p">,</span> <span class="n">filename</span>
+        <span class="p">)</span>
+
+        <span class="n">draw_game_texts</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">is_game_over</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">num_moves</span><span class="p">):</span>
+            <span class="n">handle_game_end</span><span class="p">()</span>
+
+        <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+        <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span>
+
+    <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>  <span class="c1"># pylint: disable=no-member</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, John Harry Arciga &amp; Jonathan David Pagaduan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

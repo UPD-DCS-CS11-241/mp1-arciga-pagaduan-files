@@ -1,0 +1,7 @@
+mp1\_classes module
+===================
+
+.. automodule:: mp1_classes
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,20 @@
+.. Egg Roll documentation master file, created by
+   sphinx-quickstart on Wed Jan  8 00:05:58 2025.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Egg Roll documentation
+======================
+
+Welcome to Egg Roll! Click on the modules or .py files on the left
+to see the documentation details.
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   modules
+   test
+
+
